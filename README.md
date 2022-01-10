@@ -1,4 +1,5 @@
-# FunBazeAPI<br> ### Интерфейс взаимодействия с системами проекта **[FunBaze.ru](https://funbaze.ru/)**<br>Подробная документация: https://funbaze.ru/javadocs/api
+# FunBazeAPI 
+### Интерфейс взаимодействия с системами проекта **[FunBaze.ru](https://funbaze.ru/)**<br>Подробная документация: https://funbaze.ru/javadocs/api
 -----------------------------------
 ## Примеры работы
 #### Получение учётной записи пользователя
