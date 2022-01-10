@@ -1,3 +1,3 @@
 # FunBazeAPI
-Интерфейс взаимодействия с системами [https://funbaze.ru/](FunBaze)<br>
+Интерфейс взаимодействия с системами [FunBaze](https://funbaze.ru/)<br>
 Подробная документация: https://funbaze.ru/javadocs/api
