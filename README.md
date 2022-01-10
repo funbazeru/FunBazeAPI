@@ -3,7 +3,7 @@
 ### Подробная документация: https://funbaze.ru/javadocs/api
 -----------------------------------
 ## Примеры работы
-##### Получение учётной записи пользователя
+#### Получение учётной записи пользователя
 ```java
 //Получаем менеджер учётных записей
 UserManager manager = FunBazeApi.getUserManager();
@@ -23,7 +23,7 @@ try {
   user = manager.load("DrKapdor", CacheMethod.GAME_SESSION);
 }
 ```
-##### Взаимодействие с учётной записью
+#### Взаимодействие с учётной записью
 ```java
 //Начислим игроку немного игровой валюты
 UserBalance balance = user.getData().getBalance();
