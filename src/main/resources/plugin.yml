@@ -1,0 +1,11 @@
+name: FunBazeAPI
+version: 1.0-SNAPSHOT
+author: DrKapdor
+
+depend:
+  - WorldGuard
+  - WorldEdit
+  - NBTAPI
+  - PluginMessagingAPI
+
+main: me.kapdor.funbazeapi.ApiPlugin
