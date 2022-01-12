@@ -3,7 +3,6 @@ package me.drkapdor.funbazeapi;
 import com.google.gson.JsonParser;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.database.MySQLDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;

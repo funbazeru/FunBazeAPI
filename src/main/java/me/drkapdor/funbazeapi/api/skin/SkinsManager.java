@@ -3,7 +3,7 @@ package me.drkapdor.funbazeapi.api.skin;
 import com.mojang.authlib.properties.Property;
 import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.user.stored.UserSkin;
-import me.kapdor.pmapi.bukkit.MessagingAPI;
+import me.drkapdor.pmapi.bukkit.MessagingAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
