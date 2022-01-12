@@ -268,4 +268,13 @@ public class RolesManager {
             } else return false;
         } else return false;
     }
+
+    /**
+     * Получить скорборд с командами ролей
+     * @return Скорборд
+     */
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
 }
