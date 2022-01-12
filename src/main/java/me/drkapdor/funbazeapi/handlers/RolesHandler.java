@@ -38,6 +38,9 @@ public class RolesHandler implements Listener {
             user = FunBazeApi.getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
         }
 
+        //Очищаем инвентарь от ролевых предметов
+        clearPlayer(player);
+
         //Сохраняем отыгранное на роли время
         UserMeta meta = user.getData().getMeta();
         Role previous = event.getPrevious();
