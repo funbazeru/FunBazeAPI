@@ -10,7 +10,7 @@ FBUser user;
 try {
   //Подгружаем учётную запись из кэша
   user = manager.getUser("DrKapdor");
-} catch(UserNotLoadedException exception) {
+} catch (UserNotLoadedException exception) {
   /*
   * В случае, если учётная запись не была кэширована, подргужаем её.
   * После подгрузки она будет автоматически кэширована.
@@ -23,11 +23,20 @@ try {
 }
 ```
 #### Взаимодействие с учётной записью
+##### Управление балансом пользователя
 ```java
-//Начислим игроку немного игровой валюты
 UserBalance balance = user.getData().getBalance();
 balance.addMoney(1500);
 user.getData().setBalance(balance);
 user.save();
 user.asBukkit().sendMessage("Ваш баланс был пополнен на 1.5000!");
+```
+##### Управление метаданными ролевого персонажа
+```java
+UserMeta meta = user.getData().getMeta();
+meta.setAge(30);
+meta.setGender(UserGender.MALE);
+user.getData().setMeta(meta);
+user.save();
+user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет двадцати!");
 ```
