@@ -8,4 +8,4 @@ depend:
   - NBTAPI
   - PluginMessagingAPI
 
-main: me.kapdor.funbazeapi.ApiPlugin
+main: me.drkapdor.funbazeapi.ApiPlugin
