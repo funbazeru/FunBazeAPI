@@ -27,9 +27,10 @@ try {
 ```java
 UserBalance balance = user.getData().getBalance();
 balance.addMoney(1500);
+balance.addVouchers(150);
 user.getData().setBalance(balance);
 user.save();
-user.asBukkit().sendMessage("Ваш баланс был пополнен на 1.5000!");
+user.asBukkit().sendMessage("Ваш баланс был пополнен!");
 ```
 ##### Управление метаданными ролевого персонажа
 ```java
