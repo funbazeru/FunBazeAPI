@@ -42,7 +42,6 @@ user.save();
 user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет двадцати!");
 ```
 ## Зависимости
------------------------------------
 * PluginMessagingAPI
 * NBTAPI
 * WorldGuard v6.2.2
