@@ -10,7 +10,7 @@ FBUser user;
 try {
   //Подгружаем учётную запись из кэша
   user = manager.getUser("DrKapdor");
-} catch(UserNotLoadedException exception) {
+} catch (UserNotLoadedException exception) {
   /*
   * В случае, если учётная запись не была кэширована, подргужаем её.
   * После подгрузки она будет автоматически кэширована.
@@ -23,11 +23,26 @@ try {
 }
 ```
 #### Взаимодействие с учётной записью
+##### Управление балансом пользователя
 ```java
-//Начислим игроку немного игровой валюты
 UserBalance balance = user.getData().getBalance();
 balance.addMoney(1500);
+balance.addVouchers(150);
 user.getData().setBalance(balance);
 user.save();
-user.asBukkit().sendMessage("Ваш баланс был пополнен на 1.5000!");
+user.asBukkit().sendMessage("Ваш баланс был пополнен!");
 ```
+##### Управление метаданными ролевого персонажа
+```java
+UserMeta meta = user.getData().getMeta();
+meta.setAge(30);
+meta.setGender(UserGender.MALE);
+user.getData().setMeta(meta);
+user.save();
+user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет двадцати!");
+```
+## Зависимости
+* [PluginMessagingAPI](https://drive.google.com/u/0/uc?id=1hnaEhO6qr6qlRdx4GLRPVbhBtwPBMjuf&export=download)
+* NBTAPI
+* WorldGuard v6.2.2
+* WorldEdit v6.1.9
