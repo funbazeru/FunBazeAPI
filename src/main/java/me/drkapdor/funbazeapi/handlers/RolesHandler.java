@@ -77,8 +77,6 @@ public class RolesHandler implements Listener {
         }
     }
 
-    //Очищаем инвентарь игрока от ролевых предметов
-
     private static void clearPlayer(Player player) {
         ItemStack offHand = player.getInventory().getItemInOffHand();
         if (offHand != null && offHand.getType() != Material.AIR) {
