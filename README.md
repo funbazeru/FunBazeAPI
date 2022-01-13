@@ -26,8 +26,8 @@ try {
 ##### Управление балансом пользователя
 ```java
 UserBalance balance = user.getData().getBalance();
-balance.addMoney(1500);
-balance.addVouchers(150);
+balance.addMoney(1500); //Пополняем баланс игровых рублей
+balance.addVouchers(150); //Пополняем баланс донат-валюты
 user.getData().setBalance(balance);
 user.save();
 user.asBukkit().sendMessage("Ваш баланс был пополнен!");
