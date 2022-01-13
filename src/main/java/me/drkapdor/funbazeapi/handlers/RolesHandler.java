@@ -38,7 +38,7 @@ public class RolesHandler implements Listener {
             user = FunBazeApi.getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
         }
 
-        //Очищаем инвентарь от ролевых предметов
+        //Очищаем игрока от эффектов и удаляем ролевые предметы
         clearPlayer(player);
 
         //Сохраняем отыгранное на роли время
