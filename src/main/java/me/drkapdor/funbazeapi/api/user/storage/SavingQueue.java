@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.api.event.user.UserSavedEvent;
 import me.drkapdor.funbazeapi.api.user.FBUser;
 import me.drkapdor.funbazeapi.api.user.manager.UserNotLoadedException;
 import org.bukkit.Bukkit;
@@ -33,6 +34,7 @@ public class SavingQueue {
                             String access = gson.toJson(user.getAccess());
                             String sql = "UPDATE Players SET ID = '" + user.getId() + "', Name = '" + name + "', IP = '" + user.getIp() + "', DiscordID = '" + user.getDiscordId() + "', Access = '" + access + "', Data = '" + data + "' WHERE Nickname = '" + user.getNickname() + "'";
                             ApiPlugin.getMySQLDatabase().update(sql);
+                            Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
                         }
                         queue.remove(nickname.toLowerCase());
                         FunBazeApi.getUserManager().unCache(nickname);

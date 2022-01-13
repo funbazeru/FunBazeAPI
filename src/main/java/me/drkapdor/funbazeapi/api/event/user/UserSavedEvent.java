@@ -6,19 +6,17 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Событие, вызываемое в момент подгрузки учётной записи из базы данных в кэш
+ * Событие, вызываемое в момент учётная запись сохраняется в базу данных
  */
 
-public class UserLoadEvent extends Event {
+public class UserSavedEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final FBUser user;
-    private final Player player;
 
-    public UserLoadEvent(FBUser user, Player player) {
+    public UserSavedEvent(FBUser user) {
         this.user = user;
-        this.player = player;
     }
 
     public static HandlerList getHandlerList() {
@@ -27,7 +25,7 @@ public class UserLoadEvent extends Event {
 
     @Override
     public String getEventName() {
-        return "UserLoadEvent";
+        return "UserSavedEvent";
     }
 
     @Override
@@ -39,7 +37,4 @@ public class UserLoadEvent extends Event {
         return user;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 }
