@@ -59,4 +59,15 @@ public class LexicalUtils {
         }
         return false;
     }
+
+    /**
+     * Вернуть строку с заглавной буквы вне зависимости от регистра
+     *
+     * @param str Строка на вход
+     * @return Строка на выход
+     */
+
+    public static String capitalize(String str) {
+        return str.toUpperCase().charAt(0) + str.toLowerCase().substring(1);
+    }
 }

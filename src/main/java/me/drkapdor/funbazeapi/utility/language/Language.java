@@ -9,5 +9,4 @@ public class Language {
     public static LanguageProtocol names = new NamesProtocol();
     public static LanguageProtocol times = new TimesProtocol();
 
-
 }

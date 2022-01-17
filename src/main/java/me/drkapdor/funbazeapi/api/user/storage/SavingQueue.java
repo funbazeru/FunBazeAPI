@@ -23,26 +23,24 @@ public class SavingQueue {
     private static final Gson gson = new GsonBuilder().create();
 
     static {
-        Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> {
-            queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
-                try {
-                    if (queue.contains(nickname.toLowerCase())) {
-                        FBUser user = FunBazeApi.getUserManager().getUser(nickname);
-                        if (user != null) {
-                            String name = gson.toJson(user.getUserName());
-                            String data = gson.toJson(user.getData());
-                            String access = gson.toJson(user.getAccess());
-                            String sql = "UPDATE Players SET ID = '" + user.getId() + "', Name = '" + name + "', IP = '" + user.getIp() + "', DiscordID = '" + user.getDiscordId() + "', Access = '" + access + "', Data = '" + data + "' WHERE Nickname = '" + user.getNickname() + "'";
-                            ApiPlugin.getMySQLDatabase().update(sql);
-                            Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
-                        }
-                        queue.remove(nickname.toLowerCase());
-                        FunBazeApi.getUserManager().unCache(nickname);
+        Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
+            try {
+                if (queue.contains(nickname.toLowerCase())) {
+                    FBUser user = FunBazeApi.getUserManager().getUser(nickname);
+                    if (user != null) {
+                        String name = gson.toJson(user.getUserName());
+                        String data = gson.toJson(user.getData());
+                        String access = gson.toJson(user.getAccess());
+                        String sql = "UPDATE Players SET ID = '" + user.getId() + "', Name = '" + name + "', IP = '" + user.getIp() + "', DiscordID = '" + user.getDiscordId() + "', Access = '" + access + "', Data = '" + data + "' WHERE Nickname = '" + user.getNickname() + "'";
+                        ApiPlugin.getMySQLDatabase().update(sql);
+                        Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
                     }
-                } catch(UserNotLoadedException ignored){
+                    queue.remove(nickname.toLowerCase());
+                    FunBazeApi.getUserManager().unCache(nickname);
                 }
-            }));
-        }, 0, 25);
+            } catch(UserNotLoadedException ignored){
+            }
+        })), 0, 25);
     }
 
     /**

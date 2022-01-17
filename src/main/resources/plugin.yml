@@ -1,6 +1,8 @@
 name: FunBazeAPI
 version: 1.0-SNAPSHOT
 author: DrKapdor
+description: "Программный интерфейс взаимодействия с системами FunBaze"
+website: "https://dev.funbaze.ru/"
 
 depend:
   - WorldGuard
