@@ -43,6 +43,7 @@ user.asBukkit().sendMessage("Теперь вы солидный молодой �
 ```
 ## Зависимости
 * [PluginMessagingAPI](https://drive.google.com/u/0/uc?id=1hnaEhO6qr6qlRdx4GLRPVbhBtwPBMjuf&export=download)
+* ProtocolLib
 * NBTAPI
 * WorldGuard v6.2.2
 * WorldEdit v6.1.9
