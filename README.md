@@ -6,11 +6,10 @@
 ```java
 //Получаем менеджер учётных записей
 UserManager manager = FunBazeApi.getUserManager();
-String nickname = "DrKapdor";
 FBUser user;
 try {
   //Подгружаем учётную запись из кэша
-  user = manager.getUser(nickname);
+  user = manager.getUser("DrKapdor");
 } catch (UserNotLoadedException exception) {
   /*
   * В случае, если учётная запись не была кэширована, подргужаем её.
@@ -20,7 +19,7 @@ try {
   * сохраняющий учётную запись пользованя в кэше до тех пор,
   * пока пользователь находится в игровой сесси (в сети).
   */
-  user = manager.load(nickname, CacheMethod.GAME_SESSION);
+  user = manager.load("DrKapdor", CacheMethod.GAME_SESSION);
 }
 ```
 #### Взаимодействие с учётной записью
