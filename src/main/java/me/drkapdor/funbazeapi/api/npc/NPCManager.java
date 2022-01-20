@@ -10,19 +10,19 @@ import java.util.UUID;
 
 public class NPCManager {
 
-    private static final NPCPool pool = NPCPool.builder(ApiPlugin.getInstance()).spawnDistance(16).actionDistance(8).tabListRemoveTicks(20).build();
+    private final NPCPool pool = NPCPool.builder(ApiPlugin.getInstance()).spawnDistance(16).actionDistance(8).tabListRemoveTicks(20).build();
 
-    public static NPC createNPC(Location location, NPCProfile profile, boolean mimic, boolean lookAtPlayer) {
+    public NPC createNPC(Location location, NPCProfile profile, boolean mimic, boolean lookAtPlayer) {
         return NPC.builder().location(location).profile(profile).imitatePlayer(mimic).lookAtPlayer(lookAtPlayer).build(pool);
     }
 
-    public static NPCProfile createProfile(UUID uuid, String name, String skinValue, String skinSignature) {
+    public NPCProfile newProfile(UUID uuid, String name, String skinValue, String skinSignature) {
         List<NPCProfile.Property> properties = new ArrayList<>();
         properties.add(new NPCProfile.Property("textures", skinValue, skinSignature));
         return new NPCProfile(uuid, name, properties);
     }
 
-    public static void removeNPC(int id) {
+    public void remove(int id) {
         pool.removeNPC(id);
     }
 }
