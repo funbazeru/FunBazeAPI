@@ -5,6 +5,7 @@ description: "Программный интерфейс взаимодейств
 website: "https://dev.funbaze.ru/"
 
 depend:
+  - ProtocolLib
   - WorldGuard
   - WorldEdit
   - NBTAPI
