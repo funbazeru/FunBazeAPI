@@ -1,5 +1,7 @@
 package me.drkapdor.funbazeapi.utility.block;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.drkapdor.funbazeapi.ApiPlugin;
 import org.bukkit.block.Block;
 
 public class BlockUtil {
@@ -33,5 +35,12 @@ public class BlockUtil {
                 block.getType().toString().contains("FLOWER") )
             return BlockModel.GRASS;
         else return BlockModel.OTHER;
+    }
+
+    public static boolean hasRegion(Block block, String regionName) {
+        for (ProtectedRegion region : ApiPlugin.getRegionManager().getApplicableRegions(block.getLocation()))
+            if (region.getId().equals(regionName))
+                return true;
+        return false;
     }
 }
