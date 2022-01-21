@@ -4,8 +4,10 @@
 ## Примеры работы
 #### Получение учётной записи пользователя
 ```java
+// Получаем апи
+FunBazeApi api = fbApi = Bukkit.getServer().getServicesManager().load(FunBazeApi.class);
 //Получаем менеджер учётных записей
-UserManager manager = FunBazeApi.getUserManager();
+UserManager manager = api.getUserManager();
 FBUser user;
 try {
   //Подгружаем учётную запись из кэша
