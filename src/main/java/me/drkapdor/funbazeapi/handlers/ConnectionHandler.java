@@ -17,9 +17,9 @@ public class ConnectionHandler implements Listener {
     @EventHandler (priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
-            FBUser user = FunBazeApi.getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
+            FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
             if (user == null)
-                FunBazeApi.getUserManager().createUser(event.getPlayer());
+                ApiPlugin.getApi().getUserManager().createUser(event.getPlayer());
         });
     }
 
@@ -28,7 +28,7 @@ public class ConnectionHandler implements Listener {
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskLaterAsynchronously(ApiPlugin.getInstance(), () -> {
             if (Bukkit.getPlayerExact(player.getName()) == null)
-                FunBazeApi.getUserManager().unCache(player.getName());
+                ApiPlugin.getApi().getUserManager().unCache(player.getName());
         }, 400);
     }
 }

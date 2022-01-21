@@ -3,6 +3,7 @@ package me.drkapdor.funbazeapi;
 import com.google.gson.JsonParser;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.database.MySQLDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 public class ApiPlugin extends JavaPlugin {
 
     private static ApiPlugin instance;
+    private static FunBazeApi api;
     private static final JsonParser jsonParser = new JsonParser();
     private static RegionManager regionManager;
     private static MySQLDatabase mySQLDatabase;
@@ -23,9 +25,14 @@ public class ApiPlugin extends JavaPlugin {
     public static File dataFolder;
     private static FileConfiguration configuration;
 
+    public static FunBazeApi getApi() {
+        return api;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
+        api = new FunBazeApi();
         loadConfiguration();
         init();
     }

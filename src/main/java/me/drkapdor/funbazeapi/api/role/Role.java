@@ -1,5 +1,6 @@
 package me.drkapdor.funbazeapi.api.role;
 
+import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.api.user.attachment.UserStatus;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
@@ -338,7 +339,7 @@ public abstract class Role {
      */
 
     public int getClaimed() {
-        return FunBazeApi.getRolesManager().getPlayersByRole(name).size();
+        return ApiPlugin.getApi().getRolesManager().getPlayersByRole(name).size();
     }
 
     /**
@@ -348,7 +349,7 @@ public abstract class Role {
      */
 
     public boolean isClaimed(Player player) {
-        return FunBazeApi.getRolesManager().getPlayerRole(player).getName().equals(name);
+        return ApiPlugin.getApi().getRolesManager().getPlayerRole(player).getName().equals(name);
     }
 
     /**

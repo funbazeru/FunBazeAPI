@@ -38,7 +38,7 @@ public class AdvancedMessage {
 
     public AdvancedMessage append(AdvancedMessage message) {
         if (builder == null)
-            builder = new ComponentBuilder(component);
+            builder = new ComponentBuilder(component.getText());
         builder.append(message.getComponent(), ComponentBuilder.FormatRetention.FORMATTING);
         return this;
     }
@@ -57,8 +57,8 @@ public class AdvancedMessage {
         return component.getText();
     }
 
-    public TextComponent getComponent() {
-        return component;
+    public BaseComponent[] getComponent() {
+        return new TextComponent[]{component};
     }
 
     public BaseComponent[] build() {

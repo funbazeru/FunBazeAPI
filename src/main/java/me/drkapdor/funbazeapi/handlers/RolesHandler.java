@@ -33,9 +33,9 @@ public class RolesHandler implements Listener {
         Player player = event.getPlayer();
         FBUser user;
         try {
-            user = FunBazeApi.getUserManager().getUser(player);
+            user = ApiPlugin.getApi().getUserManager().getUser(player);
         } catch (UserNotLoadedException exception) {
-            user = FunBazeApi.getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
+            user = ApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
         }
 
         //Очищаем игрока от эффектов и удаляем ролевые предметы
@@ -57,7 +57,7 @@ public class RolesHandler implements Listener {
         //Обновляем скин в соответствии с ролью
         Role current = event.getRole();
         BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
-        SkinsManager skinsManager = FunBazeApi.getSkinsManager();
+        SkinsManager skinsManager = ApiPlugin.getApi().getSkinsManager();
         if (customSkin != null) {
             Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
                 AccessToken token = MojangUtils.nextToken();

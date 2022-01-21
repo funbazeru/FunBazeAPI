@@ -26,7 +26,7 @@ public class SavingQueue {
         Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
             try {
                 if (queue.contains(nickname.toLowerCase())) {
-                    FBUser user = FunBazeApi.getUserManager().getUser(nickname);
+                    FBUser user = ApiPlugin.getApi().getUserManager().getUser(nickname);
                     if (user != null) {
                         String name = gson.toJson(user.getUserName());
                         String data = gson.toJson(user.getData());
@@ -36,7 +36,7 @@ public class SavingQueue {
                         Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
                     }
                     queue.remove(nickname.toLowerCase());
-                    FunBazeApi.getUserManager().unCache(nickname);
+                    ApiPlugin.getApi().getUserManager().unCache(nickname);
                 }
             } catch(UserNotLoadedException ignored){
             }

@@ -137,9 +137,9 @@ public class RolesManager {
     public void dropRole(Player player) {
         FBUser user;
         try {
-            user = FunBazeApi.getUserManager().getUser(player);
+            user = ApiPlugin.getApi().getUserManager().getUser(player);
         } catch (UserNotLoadedException ex) {
-            user = FunBazeApi.getUserManager().load(player.getName(), CacheMethod.OFFLINE_REQUEST);
+            user = ApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.OFFLINE_REQUEST);
         }
         Role role = getPlayerRole(player);
         if (role != null) {
