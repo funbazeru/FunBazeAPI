@@ -5,7 +5,7 @@
 #### Получение учётной записи пользователя
 ```java
 // Получаем апи
-FunBazeApi api = fbApi = Bukkit.getServer().getServicesManager().load(FunBazeApi.class);
+FunBazeApi api = Bukkit.getServer().getServicesManager().load(FunBazeApi.class);
 //Получаем менеджер учётных записей
 UserManager manager = api.getUserManager();
 FBUser user;
