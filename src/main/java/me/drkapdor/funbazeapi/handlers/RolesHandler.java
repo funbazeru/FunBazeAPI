@@ -54,26 +54,28 @@ public class RolesHandler implements Listener {
             user.save();
         }
 
-        //Обновляем скин в соответствии с ролью
-        Role current = event.getRole();
-        BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
-        SkinsManager skinsManager = ApiPlugin.getApi().getSkinsManager();
-        if (customSkin != null) {
-            Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
-                AccessToken token = MojangUtils.nextToken();
-                MojangUtils.uploadSkin(token, meta.getGender() == UserGender.MALE ? "classic" : "slim", customSkin);
-                UserSkin skin = SkinUtils.getCustomSkin();
+        if (event.isChangeSkinNeeded()) {
+            //Обновляем скин в соответствии с ролью
+            Role current = event.getRole();
+            BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
+            SkinsManager skinsManager = ApiPlugin.getApi().getSkinsManager();
+            if (customSkin != null) {
+                Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
+                    AccessToken token = MojangUtils.nextToken();
+                    MojangUtils.uploadSkin(token, meta.getGender() == UserGender.MALE ? "classic" : "slim", customSkin);
+                    UserSkin skin = SkinUtils.getCustomSkin();
+                    skinsManager.setSkin(player, skin, true);
+                    if (event.enableParticles())
+                        player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
+                    skinsManager.getCache().put(player.getName(), skin);
+                });
+            } else {
+                String[] textures = current.getDefaultSkinData();
+                UserSkin skin = new UserSkin(textures[0], textures[1]);
                 skinsManager.setSkin(player, skin, true);
                 if (event.enableParticles())
                     player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
-                skinsManager.getCache().put(player.getName(), skin);
-            });
-        } else {
-            String[] textures = current.getDefaultSkinData();
-            UserSkin skin = new UserSkin(textures[0], textures[1]);
-            skinsManager.setSkin(player, skin, true);
-            if (event.enableParticles())
-                player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
+            }
         }
     }
 

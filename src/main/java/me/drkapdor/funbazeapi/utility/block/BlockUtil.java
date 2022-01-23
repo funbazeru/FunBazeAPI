@@ -4,6 +4,10 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.drkapdor.funbazeapi.ApiPlugin;
 import org.bukkit.block.Block;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class BlockUtil {
 
     public static BlockModel getBlockModel(Block block) {
@@ -42,5 +46,12 @@ public class BlockUtil {
             if (region.getId().equals(regionName))
                 return true;
         return false;
+    }
+
+    public static Collection<String> getRegions(Block block) {
+        List<String> names = new ArrayList<>();
+        for (ProtectedRegion region : ApiPlugin.getRegionManager().getApplicableRegions(block.getLocation()))
+            names.add(region.getId());
+        return names;
     }
 }

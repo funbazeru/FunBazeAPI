@@ -32,6 +32,7 @@ public abstract class Role {
     private int limit = 999;
     private String[] defaultSkinData;
     private final HashMap<String, Integer> playtimeLimit = new HashMap<>();
+    private boolean hidden;
 
     /**
      * Стандартная роль
@@ -331,6 +332,24 @@ public abstract class Role {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    /**
+     * Проверить, является ли роль скрытой из /roles
+     * @return Скрыта ли роль
+     */
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Установить роль скрытой/отображающейся в /roles
+     * @param hidden Скрывать ли роль
+     */
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     /**

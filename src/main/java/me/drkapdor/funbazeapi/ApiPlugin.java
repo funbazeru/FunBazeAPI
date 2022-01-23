@@ -25,8 +25,28 @@ public class ApiPlugin extends JavaPlugin {
     public static File dataFolder;
     private static FileConfiguration configuration;
 
+    public static ApiPlugin getInstance() {
+        return instance;
+    }
+
     public static FunBazeApi getApi() {
         return api;
+    }
+
+    public static MySQLDatabase getMySQLDatabase() {
+        return mySQLDatabase;
+    }
+
+    public static RegionManager getRegionManager() {
+        return regionManager;
+    }
+
+    public static JsonParser getJsonParser() {
+        return jsonParser;
+    }
+
+    public static FileConfiguration getConfiguration() {
+        return configuration;
     }
 
     @Override
@@ -86,23 +106,4 @@ public class ApiPlugin extends JavaPlugin {
         mySQLDatabase.execute(sql);
     }
 
-    public static ApiPlugin getInstance() {
-        return instance;
-    }
-
-    public static MySQLDatabase getMySQLDatabase() {
-        return mySQLDatabase;
-    }
-
-    public static RegionManager getRegionManager() {
-        return regionManager;
-    }
-
-    public static JsonParser getJsonParser() {
-        return jsonParser;
-    }
-
-    public static FileConfiguration getConfiguration() {
-        return configuration;
-    }
 }

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -66,16 +67,17 @@ public class RolesManager {
      * @param role Устанавливаемая игроку роль
      * @param particles Включить частицы взрыва при выборе роли
      * @param start Обозначить то, что роль назначается игроку при входе
+     * @param skinChangeNeeded Нужно ли изменять скин при выборе роли
      * @return Результат выполнения
      */
 
-    public boolean setRole(Player player, String role, boolean particles, boolean start) {
+    public boolean setRole(Player player, String role, boolean particles, boolean start, boolean skinChangeNeeded) {
         if (roles.get(role.toLowerCase()) == null)
             return false;
         Team team = scoreboard.getTeam((99 - roles.get(role).getTabPriority()) + roles.get(role).getName());
         if (team == null)
             return false;
-        Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles));
+        Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles, skinChangeNeeded));
         player.closeInventory();
         for (Team otherTeam : scoreboard.getTeams()) {
             if (otherTeam.getEntries().contains(player.getName())) {
@@ -96,12 +98,12 @@ public class RolesManager {
      * Установить определённую роль игроку (partisles = false)
      * @param player Игрок, которому устанавливается роль
      * @param role Устанавливаемая игроку роль
-     * @param particles Включить частицы взрыва при выборе роли
+     * @param start Обозначить то, что роль назначается игроку при входе
      * @return Результат выполнения
      */
 
-    public boolean setRole(Player player, String role, boolean particles) {
-        return setRole(player, role, particles, false);
+    public boolean setRole(Player player, String role, boolean start) {
+        return setRole(player, role, start, false, true);
     }
 
     /**

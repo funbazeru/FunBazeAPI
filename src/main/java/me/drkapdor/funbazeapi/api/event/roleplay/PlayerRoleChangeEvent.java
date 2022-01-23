@@ -17,13 +17,15 @@ public class PlayerRoleChangeEvent extends PlayerEvent {
     private final Role previous;
     private final boolean start;
     private final boolean particles;
+    private final boolean skinChangeNeeded;
 
-    public PlayerRoleChangeEvent(Player player, Role role, Role previous, boolean start, boolean particles) {
+    public PlayerRoleChangeEvent(Player player, Role role, Role previous, boolean start, boolean particles, boolean skinChangeNeeded) {
         super(player);
         this.role = role;
         this.previous = previous;
         this.start = start;
         this.particles = particles;
+        this.skinChangeNeeded = skinChangeNeeded;
     }
 
     public static HandlerList getHandlerList() {
@@ -42,7 +44,6 @@ public class PlayerRoleChangeEvent extends PlayerEvent {
 
     /**
      * Получить роль, на которую игрок будет назначен
-     *
      * @return Роль, на которую игрок будет назначен
      */
 
@@ -52,7 +53,6 @@ public class PlayerRoleChangeEvent extends PlayerEvent {
 
     /**
      * Получить роль, на которую игрок уже был назначен
-     *
      * @return Роль, на которую игрок уже был назначен
      */
 
@@ -62,7 +62,6 @@ public class PlayerRoleChangeEvent extends PlayerEvent {
 
     /**
      * Проверить, выдаётся ли роль автоматически в момент подключения игрока к серверу
-     *
      * @return Выдаётся ли роль автоматически в момент подключения игрока к серверу
      */
 
@@ -72,11 +71,18 @@ public class PlayerRoleChangeEvent extends PlayerEvent {
 
     /**
      * Проверить, будут ли отображаться частицы взрыва при выборе роли
-     *
      * @return Будут ли отображаться частицы взрыва при выборе роли
      */
 
     public boolean enableParticles() {
         return particles;
+    }
+
+    /**
+     * Проверить, нужно ли изменять скин при выборе роли
+     * @return Нужно ли изменять скин при выборе роли
+     */
+    public boolean isChangeSkinNeeded() {
+        return skinChangeNeeded;
     }
 }
