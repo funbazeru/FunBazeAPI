@@ -5,6 +5,10 @@ import me.drkapdor.funbazeapi.utility.language.protocol.name.Case;
 
 public class NamesProtocol implements LanguageProtocol {
 
+    public static void main(String[] args) {
+        System.out.println(convertName("Полковник", UserGender.MALE, Case.GENITIVE));
+    }
+
     @Override
     public String convert(Object... args) {
         if (args.length == 3) {
@@ -22,7 +26,7 @@ public class NamesProtocol implements LanguageProtocol {
         return null;
     }
 
-    private String convertName(String name, UserGender gender, Case type) {
+    private static String convertName(String name, UserGender gender, Case type) {
         String substring1 = name.substring(0, name.length() - 2);
         String s = name.substring(0, name.length() - 1) + "ой";
         final boolean b1 = name.endsWith("рий") ||
@@ -65,6 +69,8 @@ public class NamesProtocol implements LanguageProtocol {
                     else if (name.endsWith("чий") ||
                             name.endsWith("oий"))
                         return substring1 + "ьего";
+                    else if (name.endsWith("ший"))
+                        return name.substring(0, name.length() - 2) + "его";
                     else if (name.endsWith("ий"))
                         return substring1 + "ия";
                     else if (name.endsWith("ый"))
@@ -123,7 +129,7 @@ public class NamesProtocol implements LanguageProtocol {
                         return name;
                 }
                 case GENITIVE: {
-                    if (name.endsWith("ша"))
+                    if (name.endsWith("ша") || name.endsWith("ка"))
                         return name.substring(0, name.length() - 1) + "и";
                     else if (name.endsWith("ха"))
                         return name.substring(0, name.length() - 1) + "и";
@@ -152,6 +158,8 @@ public class NamesProtocol implements LanguageProtocol {
                     else if (name.endsWith("чий") ||
                             name.endsWith("oий"))
                         return substring1 + "ьего";
+                    else if (name.endsWith("ший"))
+                        return name.substring(0, name.length() - 2) + "его";
                     else if (name.endsWith("ий"))
                         return substring1 + "ия";
                     else if (name.endsWith("ый") ||
@@ -232,6 +240,8 @@ public class NamesProtocol implements LanguageProtocol {
                     else if (name.endsWith("чий") ||
                             name.endsWith("oий"))
                         return substring1 + "ьиму";
+                    else if (name.endsWith("ший"))
+                        return name.substring(0, name.length() - 2) + "ему";
                     else if (name.endsWith("ий"))
                         return substring1 + "ию";
                     else if (name.endsWith("ый") ||
@@ -316,6 +326,8 @@ public class NamesProtocol implements LanguageProtocol {
                         else if (name.endsWith("чий") ||
                                 name.endsWith("щий"))
                             return substring1 + "ьим";
+                        else if (name.endsWith("ший"))
+                            return name.substring(0, name.length() - 2) + "им";
                         else if (name.endsWith("ий"))
                             return substring1 + "ием";
                         else if (name.endsWith("ый") ||
@@ -401,6 +413,8 @@ public class NamesProtocol implements LanguageProtocol {
                     else if (name.endsWith("чий") ||
                             name.endsWith("щий"))
                         return substring1 + "ьием";
+                    else if (name.endsWith("ший"))
+                        return name.substring(0, name.length() - 2) + "ем";
                     else if (name.endsWith("ий"))
                         return substring1 + "ие";
                     else if (name.endsWith("ый") ||

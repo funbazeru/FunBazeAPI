@@ -61,13 +61,25 @@ public class LexicalUtils {
     }
 
     /**
-     * Вернуть строку с заглавной буквы вне зависимости от регистра
+     * Вернуть строку с заглавной буквы
      *
      * @param str Строка на вход
      * @return Строка на выход
      */
 
     public static String capitalize(String str) {
-        return str.toUpperCase().charAt(0) + str.toLowerCase().substring(1);
+        while (str.startsWith(" "))
+            str = str.substring(1);
+        StringBuilder builder = new StringBuilder(" ");
+        for (String word : str.split(" ")) {
+            if (str.startsWith(word))
+                builder.append(word.toUpperCase().charAt(0)).append(word.substring(1));
+            else builder.append(" ").append(word);
+        }
+        return builder.substring(1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(capitalize("начальник отдела"));
     }
 }

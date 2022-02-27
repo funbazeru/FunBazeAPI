@@ -5,6 +5,9 @@ import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
 import me.drkapdor.funbazeapi.api.user.stored.PendingPayment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Атрибуты учётной записи пользователя
  * @author DrKapdor
@@ -21,6 +24,7 @@ public class UserData {
     private UserBalance balance;
     private PendingPayment pendingPayment;
     private PromotionData promotionData;
+    private final List<String> activatedPromoCodes;
 
     public UserData() {
         registerDate = System.currentTimeMillis();
@@ -28,6 +32,7 @@ public class UserData {
         meta = new UserMeta(UserGender.MALE, 18);
         balance = new UserBalance();
         promotionData = new PromotionData();
+        activatedPromoCodes = new ArrayList<>();
     }
 
     /**
@@ -198,5 +203,14 @@ public class UserData {
 
     public void setPromotionData(PromotionData promotionData) {
         this.promotionData = promotionData;
+    }
+
+    /**
+     * Получить список активированных промокодов
+     * @return Список активированных промокодов
+     */
+
+    public List<String> getActivatedPromoCodes() {
+        return activatedPromoCodes;
     }
 }

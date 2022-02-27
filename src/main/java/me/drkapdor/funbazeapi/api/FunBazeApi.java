@@ -3,6 +3,7 @@ package me.drkapdor.funbazeapi.api;
 
 import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.npc.NPCManager;
+import me.drkapdor.funbazeapi.api.promocode.PromoCodeManager;
 import me.drkapdor.funbazeapi.api.role.RolesManager;
 import me.drkapdor.funbazeapi.api.skin.SkinsManager;
 import me.drkapdor.funbazeapi.api.user.manager.UserManager;
@@ -20,6 +21,7 @@ public class FunBazeApi {
     private final RolesManager rolesManager = new RolesManager();
     private final SkinsManager skinsManager = new SkinsManager();
     private final NPCManager npcManager = new NPCManager();
+    private final PromoCodeManager promoCodeManager = new PromoCodeManager();
 
     public FunBazeApi(){
         Bukkit.getServer().getServicesManager().register(FunBazeApi.class, this, ApiPlugin.getInstance(), ServicePriority.Highest);
@@ -57,4 +59,11 @@ public class FunBazeApi {
         return npcManager;
     }
 
+    /**
+     * Получить менеджер промокодов
+     * @return Менеджер промокодов
+     */
+    public PromoCodeManager getPromoCodeManager() {
+        return promoCodeManager;
+    }
 }
