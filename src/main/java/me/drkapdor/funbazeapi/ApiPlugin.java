@@ -7,6 +7,7 @@ import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.database.MySQLDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;
+import me.drkapdor.funbazeapi.rest.FunBazeRestApi;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ public class ApiPlugin extends JavaPlugin {
 
     private static ApiPlugin instance;
     private static FunBazeApi api;
+    private static FunBazeRestApi restApi;
     private static final JsonParser jsonParser = new JsonParser();
     private static RegionManager regionManager;
     private static MySQLDatabase mySQLDatabase;
@@ -31,6 +33,10 @@ public class ApiPlugin extends JavaPlugin {
 
     public static FunBazeApi getApi() {
         return api;
+    }
+
+    public static FunBazeRestApi getRestApi() {
+        return restApi;
     }
 
     public static MySQLDatabase getMySQLDatabase() {
@@ -62,6 +68,8 @@ public class ApiPlugin extends JavaPlugin {
         configuration.addDefault("DATABASE_NAME", "funbaze");
         configuration.addDefault("DATABASE_USER", "server");
         configuration.addDefault("DATABASE_PASSWORD", "hardpassword");
+        configuration.addDefault("REST_HOSTNAME", "127.0.0.1");
+        configuration.addDefault("REST_PORT", 80);
         configuration.options().copyDefaults(true);
         saveConfig();
     }
@@ -70,6 +78,8 @@ public class ApiPlugin extends JavaPlugin {
         connectMySQL();
         createDirectories();
         registerHandlers();
+        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), mySQLDatabase);
+        restApi.getServer().start();
         regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
     }
 
