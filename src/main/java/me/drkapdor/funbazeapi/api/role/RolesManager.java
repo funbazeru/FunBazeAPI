@@ -8,6 +8,7 @@ import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
 import me.drkapdor.funbazeapi.api.user.manager.CacheMethod;
 import me.drkapdor.funbazeapi.api.user.manager.UserNotLoadedException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -24,6 +25,7 @@ public class RolesManager {
 
     private final Scoreboard scoreboard;
     public final Team hiddenTeam;
+    public final Team pendingTeam;
 
     private final Map<Player, Role> playersRoles = new HashMap<>();
     private final LinkedHashMap<String, Role> roles = new LinkedHashMap<>();
@@ -33,6 +35,9 @@ public class RolesManager {
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         hiddenTeam = scoreboard.registerNewTeam("hidden");
         hiddenTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
+        pendingTeam = scoreboard.registerNewTeam("101pending");
+        pendingTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+        pendingTeam.setColor(ChatColor.GRAY);
     }
 
     /**
@@ -116,15 +121,16 @@ public class RolesManager {
         for (Team otherTeam : scoreboard.getTeams()) {
             if (otherTeam.getEntries().contains(player.getName())) {
                 otherTeam.removeEntry(player.getName());
-                if (otherTeam.getEntries().isEmpty() &&
+                if (otherTeam != pendingTeam &&
+                        otherTeam.getEntries().isEmpty() &&
                         !roles.containsKey(otherTeam.getName().toLowerCase().substring(2)))
                     otherTeam.unregister();
             }
         }
         Role role = playersRoles.get(player);
-        Team team = scoreboard.getTeam((99 - roles.get(Role.DEFAULT).getTabPriority()) + job);
+        Team team = scoreboard.getTeam((99 - role.getTabPriority()) + job);
         if (team == null) {
-            team = scoreboard.registerNewTeam((99 - roles.get(Role.DEFAULT).getTabPriority()) + job);
+            team = scoreboard.registerNewTeam((99 - role.getTabPriority()) + job);
             team.setPrefix(role.getPrefixColor() + job + " §7");
             team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
         }

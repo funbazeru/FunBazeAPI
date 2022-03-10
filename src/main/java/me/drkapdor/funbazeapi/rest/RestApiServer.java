@@ -3,6 +3,7 @@ package me.drkapdor.funbazeapi.rest;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import me.drkapdor.funbazeapi.ApiPlugin;
+import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -30,11 +31,10 @@ public class RestApiServer {
     }
 
     public void start() {
-        Thread thread = new Thread(() -> {
+        Bukkit.getScheduler().runTask(ApiPlugin.getInstance(), () -> {
             server.setExecutor(null);
             server.start();
         });
-        thread.start();
         ApiPlugin.getInstance().getLogger().info("§aREST API сервер был успешно запущен!");
     }
 }

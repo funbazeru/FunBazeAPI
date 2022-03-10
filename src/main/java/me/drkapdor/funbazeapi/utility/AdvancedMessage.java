@@ -57,8 +57,8 @@ public class AdvancedMessage {
         return component.getText();
     }
 
-    public BaseComponent[] getComponent() {
-        return new TextComponent[]{component};
+    public TextComponent getComponent() {
+        return component;
     }
 
     public BaseComponent[] build() {

@@ -32,7 +32,7 @@ public class RolesHandler implements Listener {
     public void onRoleChange(PlayerRoleChangeEvent event) {
         Player player = event.getPlayer();
         //Очищаем игрока от эффектов и удаляем ролевые предметы
-        clearPlayer(player);
+        clearPlayer(player, event.isStart());
 
         FBUser user;
         try {
@@ -81,7 +81,7 @@ public class RolesHandler implements Listener {
         }
     }
 
-    private static void clearPlayer(Player player) {
+    private static void clearPlayer(Player player, boolean isStart) {
         ItemStack offHand = player.getInventory().getItemInOffHand();
         if (offHand != null && offHand.getType() != Material.AIR) {
             NBTItem nbtItem = new NBTItem(offHand);
@@ -104,7 +104,9 @@ public class RolesHandler implements Listener {
                     player.getInventory().remove(itemStack);
                 }
             }
-        for (PotionEffect effect : player.getActivePotionEffects())
-            player.removePotionEffect(effect.getType());
+        if (isStart) {
+            for (PotionEffect effect : player.getActivePotionEffects())
+                player.removePotionEffect(effect.getType());
+        }
     }
 }
