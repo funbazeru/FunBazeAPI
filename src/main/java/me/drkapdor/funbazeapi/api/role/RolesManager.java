@@ -37,7 +37,8 @@ public class RolesManager {
         hiddenTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
         pendingTeam = scoreboard.registerNewTeam("101pending");
         pendingTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-        pendingTeam.setColor(ChatColor.GRAY);
+        pendingTeam.setPrefix("§7");
+        pendingTeam.setColor(ChatColor.DARK_GRAY);
     }
 
     /**
