@@ -83,7 +83,6 @@ public class UserManager {
                 try {
                     if (resultSet.next()) {
                         FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));
-                        user.setDiscordId(resultSet.getLong("DiscordID"));
                         Gson gson = new GsonBuilder().create();
                         user.setUserName(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
                         user.setAccess(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));
@@ -202,7 +201,6 @@ public class UserManager {
         try {
             while (resultSet.next()) {
                 FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));
-                user.setDiscordId(resultSet.getLong("DiscordID"));
                 Gson gson = new GsonBuilder().create();
                 user.setUserName(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
                 user.setAccess(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));

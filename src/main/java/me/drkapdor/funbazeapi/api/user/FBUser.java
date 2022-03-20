@@ -103,18 +103,6 @@ public class FBUser {
     }
 
     /**
-     * Установить DiscordID для учётной записи
-     * @param discordId DiscordID
-     */
-
-    public void setDiscordId(long discordId) {
-        if (discordId != 0 && !userData.hasDiscordLinkedBefore()) {
-            userData.setDiscordLinkedBefore();
-        }
-        this.discordId = discordId;
-    }
-
-    /**
      * Получить ролевое имя пользователя
      * @return Ролевое имя
      */

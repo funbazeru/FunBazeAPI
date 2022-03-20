@@ -35,7 +35,7 @@ public class RolesManager {
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         hiddenTeam = scoreboard.registerNewTeam("hidden");
         hiddenTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
-        pendingTeam = scoreboard.registerNewTeam("101pending");
+        pendingTeam = scoreboard.registerNewTeam("9999pending");
         pendingTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
         pendingTeam.setPrefix("§7");
         pendingTeam.setColor(ChatColor.DARK_GRAY);
@@ -85,14 +85,7 @@ public class RolesManager {
             return false;
         Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles, skinChangeNeeded));
         player.closeInventory();
-        for (Team otherTeam : scoreboard.getTeams()) {
-            if (otherTeam.getEntries().contains(player.getName())) {
-                otherTeam.removeEntry(player.getName());
-                if (otherTeam.getEntries().isEmpty() &&
-                        !roles.containsKey(otherTeam.getName().toLowerCase().substring(2)))
-                    otherTeam.unregister();
-            }
-        }
+        clearEmptyTeams(player);
         team.addEntry(player.getName());
         playersRoles.put(player, roles.get(role));
         Bukkit.getScheduler().runTask(ApiPlugin.getInstance(), () -> roles.get(role).applyJobEffects(player));
@@ -119,15 +112,7 @@ public class RolesManager {
      */
 
     public void setJob(Player player, String job) {
-        for (Team otherTeam : scoreboard.getTeams()) {
-            if (otherTeam.getEntries().contains(player.getName())) {
-                otherTeam.removeEntry(player.getName());
-                if (otherTeam != pendingTeam &&
-                        otherTeam.getEntries().isEmpty() &&
-                        !roles.containsKey(otherTeam.getName().toLowerCase().substring(2)))
-                    otherTeam.unregister();
-            }
-        }
+        clearEmptyTeams(player);
         Role role = playersRoles.get(player);
         Team team = scoreboard.getTeam((99 - role.getTabPriority()) + job);
         if (team == null) {
@@ -160,14 +145,7 @@ public class RolesManager {
                 user.getData().setMeta(meta);
                 user.save();
             }
-            for (Team otherTeam : scoreboard.getTeams()) {
-                if (otherTeam.getEntries().contains(player.getName())) {
-                    otherTeam.removeEntry(player.getName());
-                    if (otherTeam.getEntries().isEmpty() &&
-                            !roles.containsKey(otherTeam.getName().toLowerCase().substring(2)))
-                        otherTeam.unregister();
-                }
-            }
+            clearEmptyTeams(player);
         }
         playersRoles.remove(player);
     }
@@ -285,5 +263,16 @@ public class RolesManager {
 
     public Scoreboard getScoreboard() {
         return scoreboard;
+    }
+
+    public void clearEmptyTeams(Player player) {
+        for (Team otherTeam : scoreboard.getTeams()) {
+            if (otherTeam.getEntries().contains(player.getName())) {
+                otherTeam.removeEntry(player.getName());
+                if (!otherTeam.getName().equals(pendingTeam.getName()) && otherTeam.getEntries().isEmpty() &&
+                        !roles.containsKey(otherTeam.getName().toLowerCase().substring(2)))
+                    otherTeam.unregister();
+            }
+        }
     }
 }

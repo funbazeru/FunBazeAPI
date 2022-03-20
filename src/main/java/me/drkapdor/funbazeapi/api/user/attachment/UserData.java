@@ -3,6 +3,7 @@ package me.drkapdor.funbazeapi.api.user.attachment;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.PromotionData;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
+import me.drkapdor.funbazeapi.api.user.attachment.vk.VkData;
 import me.drkapdor.funbazeapi.api.user.stored.PendingPayment;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class UserData {
 
     private long registerDate;
     private long vipExpirationDate;
-    private boolean hasDiscordLinkedBefore;
     private long skinChangeDate;
     private UserStatus status;
     private UserMeta meta;
     private UserBalance balance;
     private PendingPayment pendingPayment;
     private PromotionData promotionData;
+    private VkData vkData;
     private final List<String> activatedPromoCodes;
 
     public UserData() {
@@ -32,6 +33,7 @@ public class UserData {
         meta = new UserMeta(UserGender.MALE, 18);
         balance = new UserBalance();
         promotionData = new PromotionData();
+        vkData = new VkData();
         activatedPromoCodes = new ArrayList<>();
     }
 
@@ -69,23 +71,6 @@ public class UserData {
 
     public void setVipExpirationDate(long vipExpirationDate) {
         this.vipExpirationDate = vipExpirationDate;
-    }
-
-    /**
-     * Пометить то, что игрок игрок привязывал учётную запись к аккаунту Discord ранее
-     */
-
-    public void setDiscordLinkedBefore() {
-        this.hasDiscordLinkedBefore = true;
-    }
-
-    /**
-     * Проверить, привязывал ли игрок учётную запись к аккаунту Discord ранее
-     * @return Привязывал ли игрок учётную запись
-     */
-
-    public boolean hasDiscordLinkedBefore() {
-        return hasDiscordLinkedBefore;
     }
 
     /**
@@ -185,6 +170,24 @@ public class UserData {
 
     public void setPendingPayment(PendingPayment pendingPayment) {
         this.pendingPayment = pendingPayment;
+    }
+
+    /**
+     * Получить сведения о странице VK
+     * @return Сведения о странице VK
+     */
+
+    public VkData getVk() {
+        return vkData;
+    }
+
+    /**
+     * Установить сведения о странице VK
+     * @param vkData Сведения о странице VK
+     */
+
+    public void setVk(VkData vkData) {
+        this.vkData = vkData;
     }
 
     /**
