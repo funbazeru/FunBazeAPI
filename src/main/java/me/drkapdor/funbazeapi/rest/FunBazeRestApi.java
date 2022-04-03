@@ -2,6 +2,7 @@ package me.drkapdor.funbazeapi.rest;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import me.drkapdor.funbazeapi.database.Database;
 import me.drkapdor.funbazeapi.database.MySQLDatabase;
 import me.drkapdor.funbazeapi.utility.RestApiUtils;
 
@@ -17,9 +18,9 @@ import java.util.Map;
 public class FunBazeRestApi {
 
     private final RestApiServer server;
-    private final MySQLDatabase database;
+    private final Database database;
 
-    public FunBazeRestApi(String hostName, int serverPort, MySQLDatabase database) {
+    public FunBazeRestApi(String hostName, int serverPort, Database database) {
         server = new RestApiServer(hostName, serverPort);
         this.database = database;
         registerStockHandlers();

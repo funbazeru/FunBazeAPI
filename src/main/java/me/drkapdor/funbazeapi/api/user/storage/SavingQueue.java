@@ -32,7 +32,7 @@ public class SavingQueue {
                         String data = gson.toJson(user.getData());
                         String access = gson.toJson(user.getAccess());
                         String sql = "UPDATE Players SET ID = '" + user.getId() + "', Name = '" + name + "', IP = '" + user.getIp() + "', DiscordID = '" + user.getDiscordId() + "', Access = '" + access + "', Data = '" + data + "' WHERE Nickname = '" + user.getNickname() + "'";
-                        ApiPlugin.getMySQLDatabase().update(sql);
+                        ApiPlugin.getDatabase().update(sql);
                         Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
                     }
                     queue.remove(nickname.toLowerCase());

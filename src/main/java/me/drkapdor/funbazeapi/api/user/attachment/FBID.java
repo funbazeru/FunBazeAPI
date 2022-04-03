@@ -67,7 +67,7 @@ public class FBID {
 
     public boolean isUnique() {
         try {
-            return !ApiPlugin.getMySQLDatabase().query("SELECT * FROM Players WHERE ID = '" + id + "'").next();
+            return !ApiPlugin.getDatabase().query("SELECT * FROM Players WHERE ID = '" + id + "'").next();
         } catch (SQLException exception) {
             return false;
         }

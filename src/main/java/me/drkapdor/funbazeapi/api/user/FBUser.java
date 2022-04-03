@@ -35,7 +35,7 @@ public class FBUser {
     private final FBID id;
     private final String nickname;
     private final String ip;
-    private long discordId;
+    private final long discordId;
     private UserName userName;
     private UserData userData;
     private UserAccess userAccess;
@@ -259,7 +259,7 @@ public class FBUser {
         String access = gson.toJson(userAccess);
         if (create) {
             String sql = "INSERT INTO Players (`ID`, `Nickname`, `Name`, `IP`, `DiscordID`, `Access`, `Data`) VALUES ('" + id + "', '" + nickname + "', '" + name + "', '" +  ip + "', '" +  discordId + "', '" + access + "', '" + data + "')";
-            ApiPlugin.getMySQLDatabase().update(sql);
+            ApiPlugin.getDatabase().update(sql);
         } else {
             SavingQueue.send(nickname);
         }

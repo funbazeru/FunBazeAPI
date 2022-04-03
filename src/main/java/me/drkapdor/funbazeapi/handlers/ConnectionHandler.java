@@ -22,17 +22,15 @@ public class ConnectionHandler implements Listener {
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onRegister(PlayerRegisterEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
-            FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
-            if (user == null)
-                user = ApiPlugin.getApi().getUserManager().createUser(event.getPlayer());
-            VkData vkData = new VkData();
-            vkData.setUserId(event.getVkId());
-            vkData.setAccessToken(event.getAccessToken());
-            vkData.setEmail(event.getEmail());
-            user.getData().setVk(vkData);
-            user.save();
-        });
+        FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
+        if (user == null)
+            user = ApiPlugin.getApi().getUserManager().createUser(event.getPlayer());
+        VkData vkData = new VkData();
+        vkData.setUserId(event.getVkId());
+        vkData.setAccessToken(event.getAccessToken());
+        vkData.setEmail(event.getEmail());
+        user.getData().setVk(vkData);
+        user.save();
     }
 
     @EventHandler (priority = EventPriority.HIGH)
@@ -41,7 +39,7 @@ public class ConnectionHandler implements Listener {
             FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
             VkData vk = user.getData().getVk();
             boolean needUpdate = false;
-            if (!vk.getEmail().equals(event.getEmail())) {
+            if (vk.getEmail() != null && !vk.getEmail().equals(event.getEmail())) {
                 vk.setEmail(event.getEmail());
                 needUpdate = true;
             }

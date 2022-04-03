@@ -79,7 +79,7 @@ public class UserManager {
             return user;
         } else {
             if (!cacheMap.containsKey(name.toLowerCase())) {
-                ResultSet resultSet = ApiPlugin.getMySQLDatabase().query("SELECT * FROM Players WHERE Nickname = '" + name + "'");
+                ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT * FROM Players WHERE Nickname = '" + name + "'");
                 try {
                     if (resultSet.next()) {
                         FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));
@@ -132,7 +132,7 @@ public class UserManager {
      */
 
     public FBUser getUser(FBID id, CacheMethod cacheMethod) {
-        ResultSet resultSet = ApiPlugin.getMySQLDatabase().query("SELECT Nickname FROM Players ID = '" + id + "'");
+        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players ID = '" + id + "'");
         try {
             if (resultSet.next())
                 return load(resultSet.getString("Nickname"), cacheMethod);
@@ -161,7 +161,7 @@ public class UserManager {
      */
 
     public FBUser getUser(long discordId) {
-        ResultSet resultSet = ApiPlugin.getMySQLDatabase().query("SELECT Nickname FROM Players WHERE DiscordID = '" + discordId + "'");
+        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE DiscordID = '" + discordId + "'");
         try {
             if (resultSet.next())
                 return load(resultSet.getString("Nickname"), CacheMethod.OFFLINE_REQUEST);
@@ -180,7 +180,7 @@ public class UserManager {
 
     public Collection<FBUser> getUsersByName(UserName userName) {
         List<FBUser> users = new ArrayList<>();
-        ResultSet resultSet = ApiPlugin.getMySQLDatabase().query("SELECT Nickname FROM Players WHERE Name = '" + new Gson().toJson(userName) + "'");
+        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE Name = '" + new Gson().toJson(userName) + "'");
         try {
             while (resultSet.next())
                 users.add(load(resultSet.getString("Nickname"), CacheMethod.OFFLINE_REQUEST));
@@ -197,7 +197,7 @@ public class UserManager {
 
     public Collection<FBUser> getAllUsers() {
         LinkedList<FBUser> users = new LinkedList<>();
-        ResultSet resultSet = ApiPlugin.getMySQLDatabase().query("SELECT * FROM Players");
+        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT * FROM Players");
         try {
             while (resultSet.next()) {
                 FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));

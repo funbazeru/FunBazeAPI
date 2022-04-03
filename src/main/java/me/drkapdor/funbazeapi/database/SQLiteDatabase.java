@@ -6,20 +6,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.logging.Level;
 
-public class MySQLDatabase implements Database {
+public class SQLiteDatabase implements Database {
 
-    private final String dbname;
-    private final String user;
-    private final String password;
-
+    private final String path;
     private Connection connection;
 
-    public MySQLDatabase(String dbname, String user, String password) {
-        this.dbname = dbname;
-        this.user = user;
-        this.password = password;
+    public SQLiteDatabase(String path) {
+        this.path = path;
         try {
-            Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
+            Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException exception) {
             exception.printStackTrace();
         }
@@ -38,7 +33,7 @@ public class MySQLDatabase implements Database {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed())
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbname + "?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true", user, password);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + path);
         //useUnicode=true&characterEncoding=UTF-8&
         return connection;
     }
@@ -52,7 +47,7 @@ public class MySQLDatabase implements Database {
                 statement.setObject(i, arg);
                 i++;
             }
-            statement.execute(sql);
+            statement.execute();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -67,7 +62,7 @@ public class MySQLDatabase implements Database {
                 statement.setObject(i, arg);
                 i++;
             }
-            return statement.executeQuery(sql);
+            return statement.executeQuery();
         } catch (SQLException exception) {
             exception.printStackTrace();
             return null;
@@ -83,7 +78,7 @@ public class MySQLDatabase implements Database {
                 statement.setObject(i, arg);
                 i++;
             }
-            statement.executeUpdate(sql);
+            statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

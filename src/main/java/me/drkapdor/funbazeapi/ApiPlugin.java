@@ -4,7 +4,10 @@ import com.google.gson.JsonParser;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.database.Database;
+import me.drkapdor.funbazeapi.database.DatabaseType;
 import me.drkapdor.funbazeapi.database.MySQLDatabase;
+import me.drkapdor.funbazeapi.database.SQLiteDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;
 import me.drkapdor.funbazeapi.rest.FunBazeRestApi;
@@ -13,6 +16,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class ApiPlugin extends JavaPlugin {
@@ -22,7 +26,7 @@ public class ApiPlugin extends JavaPlugin {
     private static FunBazeRestApi restApi;
     private static final JsonParser jsonParser = new JsonParser();
     private static RegionManager regionManager;
-    private static MySQLDatabase mySQLDatabase;
+    private static Database database;
 
     public static File dataFolder;
     private static FileConfiguration configuration;
@@ -39,8 +43,8 @@ public class ApiPlugin extends JavaPlugin {
         return restApi;
     }
 
-    public static MySQLDatabase getMySQLDatabase() {
-        return mySQLDatabase;
+    public static Database getDatabase() {
+        return database;
     }
 
     public static RegionManager getRegionManager() {
@@ -65,6 +69,7 @@ public class ApiPlugin extends JavaPlugin {
 
     private void loadConfiguration() {
         configuration = getConfig();
+        configuration.addDefault("DATABASE_TYPE", "MySQL");
         configuration.addDefault("DATABASE_NAME", "funbaze");
         configuration.addDefault("DATABASE_USER", "server");
         configuration.addDefault("DATABASE_PASSWORD", "hardpassword");
@@ -75,10 +80,10 @@ public class ApiPlugin extends JavaPlugin {
     }
 
     private void init() {
-        connectMySQL();
+        connectDatabase();
         createDirectories();
         registerHandlers();
-        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), mySQLDatabase);
+        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), database);
         restApi.getServer().start();
         regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
     }
@@ -96,15 +101,33 @@ public class ApiPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RolesHandler(), this);
     }
 
-    private void connectMySQL() {
+    private void connectDatabase() {
         getLogger().log(Level.INFO, "§aОсуществляется подключение к базе данных...");
-        //TODO: Сделать адекватный конфиг для подключения к БД
-        mySQLDatabase = new MySQLDatabase(
-                configuration.getString("DATABASE_NAME"),
-                configuration.getString("DATABASE_USER"),
-                configuration.getString("DATABASE_PASSWORD")
-        );
-        mySQLDatabase.connect();
+        DatabaseType type = DatabaseType.valueOf(configuration.getString("DATABASE_TYPE"));
+        switch (type) {
+            case MySQL: {
+                database = new MySQLDatabase(
+                        configuration.getString("DATABASE_NAME"),
+                        configuration.getString("DATABASE_USER"),
+                        configuration.getString("DATABASE_PASSWORD")
+                );
+                break;
+            }
+            case SQLite: {
+                File file = new File(getDataFolder() + File.separator + "database.db");
+                if (!file.exists()) {
+                    try {
+                        if (file.createNewFile())
+                            getLogger().log(Level.INFO, "§aСоздаю локальную базу данных...");
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+                database = new SQLiteDatabase(file.getPath());
+                break;
+            }
+        }
+        database.connect();
         String sql = "CREATE TABLE IF NOT EXISTS Players " +
                 "(`ID` VARCHAR(16) NOT NULL, " +
                 "`Nickname` VARCHAR(16) NOT NULL, " +
@@ -113,7 +136,7 @@ public class ApiPlugin extends JavaPlugin {
                 "`DiscordID` BIGINT(19) NOT NULL, " +
                 "`Access` LONGTEXT NOT NULL, " +
                 "`Data` LONGTEXT NOT NULL);";
-        mySQLDatabase.execute(sql);
+        database.execute(sql);
     }
 
 }
