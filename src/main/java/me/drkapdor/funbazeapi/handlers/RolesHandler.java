@@ -5,6 +5,7 @@ import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.api.event.roleplay.PlayerRoleChangeEvent;
 import me.drkapdor.funbazeapi.api.role.Role;
+import me.drkapdor.funbazeapi.api.role.RolesManager;
 import me.drkapdor.funbazeapi.api.skin.SkinsManager;
 import me.drkapdor.funbazeapi.api.user.FBUser;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
@@ -20,7 +21,10 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
@@ -28,19 +32,31 @@ import java.awt.image.BufferedImage;
 
 public class RolesHandler implements Listener {
 
-    @EventHandler
-    public void onRoleChange(PlayerRoleChangeEvent event) {
+    private final RolesManager manager;
+
+    public RolesHandler(RolesManager manager) {
+        this.manager = manager;
+    }
+
+    @EventHandler (priority = EventPriority.LOW)
+    private void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        manager.dropRole(player);
+        clearPlayer(player, false);
+        ApiPlugin.getApi().getRolesManager().pendingTeam.addEntry(player.getName());
+    }
+
+    @EventHandler (priority = EventPriority.LOW)
+    private void onRoleChange(PlayerRoleChangeEvent event) {
         Player player = event.getPlayer();
         //Очищаем игрока от эффектов и удаляем ролевые предметы
-        clearPlayer(player, event.isStart());
-
+        clearPlayer(player, true);
         FBUser user;
         try {
             user = ApiPlugin.getApi().getUserManager().getUser(player);
         } catch (UserNotLoadedException exception) {
             user = ApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
         }
-
         if (user != null) {
             //Сохраняем отыгранное на роли время
             UserMeta meta = user.getData().getMeta();
@@ -54,34 +70,33 @@ public class RolesHandler implements Listener {
                 user.getData().setMeta(meta);
                 user.save();
             }
-
             if (event.isChangeSkinNeeded()) {
                 //Обновляем скин в соответствии с ролью
                 Role current = event.getRole();
-                BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
                 SkinsManager skinsManager = ApiPlugin.getApi().getSkinsManager();
-                if (customSkin != null) {
-                    Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
-                        AccessToken token = MojangUtils.nextToken();
-                        MojangUtils.uploadSkin(token, meta.getGender() == UserGender.MALE ? "classic" : "slim", customSkin);
-                        UserSkin skin = SkinUtils.getCustomSkin();
-                        skinsManager.setSkin(player, skin, true);
-                        if (event.enableParticles())
-                            player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
-                        skinsManager.getCache().put(player.getName(), skin);
-                    });
-                } else {
+//                BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
+//                if (customSkin != null) {
+//                    Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
+//                        AccessToken token = MojangUtils.nextToken();
+//                        MojangUtils.uploadSkin(token, meta.getGender() == UserGender.MALE ? "classic" : "slim", customSkin);
+//                        UserSkin skin = SkinUtils.getCustomSkin();
+//                        skinsManager.setSkin(player, skin, true);
+//                        if (event.enableParticles())
+//                            player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
+//                        skinsManager.getCache().put(player.getName(), skin);
+//                    });
+//                } else {
                     String[] textures = current.getDefaultSkinData();
                     UserSkin skin = new UserSkin(textures[0], textures[1]);
                     skinsManager.setSkin(player, skin, true);
                     if (event.enableParticles())
                         player.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getEyeLocation().add(0, -0.2, 0), 2);
-                }
+//                }
             }
         }
     }
 
-    private static void clearPlayer(Player player, boolean isStart) {
+    private static void clearPlayer(Player player, boolean withEffects) {
         ItemStack offHand = player.getInventory().getItemInOffHand();
         if (offHand != null && offHand.getType() != Material.AIR) {
             NBTItem nbtItem = new NBTItem(offHand);
@@ -104,7 +119,7 @@ public class RolesHandler implements Listener {
                     player.getInventory().remove(itemStack);
                 }
             }
-        if (isStart) {
+        if (withEffects) {
             for (PotionEffect effect : player.getActivePotionEffects())
                 player.removePotionEffect(effect.getType());
         }

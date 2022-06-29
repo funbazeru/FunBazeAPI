@@ -37,6 +37,10 @@ public class AccessToken {
         return  ApiPlugin.getJsonParser().parse(new String(Base64.getDecoder().decode(token.split("\\.")[1]))).getAsJsonObject().get("exp").getAsLong() > System.currentTimeMillis();
     }
 
+    public void refresh() {
+
+    }
+
     @Override
     public String toString() {
         return token;

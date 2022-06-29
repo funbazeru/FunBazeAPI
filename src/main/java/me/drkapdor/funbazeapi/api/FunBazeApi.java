@@ -17,14 +17,19 @@ import org.bukkit.plugin.ServicePriority;
 
 public class FunBazeApi {
 
-    private final UserManager userManager = new UserManager();
-    private final RolesManager rolesManager = new RolesManager();
-    private final SkinsManager skinsManager = new SkinsManager();
-    private final NPCManager npcManager = new NPCManager();
-    private final PromoCodeManager promoCodeManager = new PromoCodeManager();
+    private final UserManager userManager;
+    private final RolesManager rolesManager;
+    private final SkinsManager skinsManager;
+    private final NPCManager npcManager;
+    private final PromoCodeManager promoCodeManager;
 
     public FunBazeApi(){
-        Bukkit.getServer().getServicesManager().register(FunBazeApi.class, this, ApiPlugin.getInstance(), ServicePriority.Highest);
+        userManager = new UserManager();
+        rolesManager = new RolesManager();
+        skinsManager = new SkinsManager();
+        npcManager = new NPCManager();
+        promoCodeManager = new PromoCodeManager();
+        Bukkit.getServer().getServicesManager().register(FunBazeApi.class, this, ApiPlugin.getInstance(), ServicePriority.Lowest);
     }
 
     /**

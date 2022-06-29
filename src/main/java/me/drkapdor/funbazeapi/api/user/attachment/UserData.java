@@ -25,6 +25,7 @@ public class UserData {
     private PendingPayment pendingPayment;
     private PromotionData promotionData;
     private VkData vkData;
+    private String apiToken;
     private final List<String> activatedPromoCodes;
 
     public UserData() {
@@ -206,6 +207,24 @@ public class UserData {
 
     public void setPromotionData(PromotionData promotionData) {
         this.promotionData = promotionData;
+    }
+
+    /**
+     * Получить API токен пользователя
+     * @return API токен
+     */
+
+    public String getApiToken() {
+        return apiToken;
+    }
+
+    /**
+     * Установить API токен пользователю
+     * @param apiToken API токен
+     */
+
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
     }
 
     /**

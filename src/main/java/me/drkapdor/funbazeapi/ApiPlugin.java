@@ -62,9 +62,12 @@ public class ApiPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        api = new FunBazeApi();
         loadConfiguration();
+        api = new FunBazeApi();
         init();
+        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), database);
+        restApi.getServer().start();
+        regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
     }
 
     private void loadConfiguration() {
@@ -83,9 +86,6 @@ public class ApiPlugin extends JavaPlugin {
         connectDatabase();
         createDirectories();
         registerHandlers();
-        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), database);
-        restApi.getServer().start();
-        regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
     }
 
     private void createDirectories() {
@@ -98,7 +98,7 @@ public class ApiPlugin extends JavaPlugin {
 
     private void registerHandlers() {
         getServer().getPluginManager().registerEvents(new ConnectionHandler(), this);
-        getServer().getPluginManager().registerEvents(new RolesHandler(), this);
+        getServer().getPluginManager().registerEvents(new RolesHandler(api.getRolesManager()), this);
     }
 
     private void connectDatabase() {

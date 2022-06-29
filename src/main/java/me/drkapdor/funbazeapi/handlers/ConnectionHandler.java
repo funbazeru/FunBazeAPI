@@ -14,11 +14,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 
 public class ConnectionHandler implements Listener {
+
+    @EventHandler (priority = EventPriority.NORMAL)
+    public void onJoin(PlayerLoginEvent event) {
+        Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () ->
+                ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION));
+    }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onRegister(PlayerRegisterEvent event) {
@@ -53,12 +60,6 @@ public class ConnectionHandler implements Listener {
                 user.save();
             }
         }
-    }
-
-    @EventHandler (priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () ->
-            ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION));
     }
 
     @EventHandler

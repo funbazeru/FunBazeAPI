@@ -37,6 +37,7 @@ public class RolesManager {
         hiddenTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
         pendingTeam = scoreboard.registerNewTeam("9999pending");
         pendingTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+        pendingTeam.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.FOR_OTHER_TEAMS);
         pendingTeam.setPrefix("§7");
         pendingTeam.setColor(ChatColor.DARK_GRAY);
     }
@@ -83,13 +84,14 @@ public class RolesManager {
         Team team = scoreboard.getTeam((99 - roles.get(role).getTabPriority()) + roles.get(role).getName());
         if (team == null)
             return false;
-        Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles, skinChangeNeeded));
         player.closeInventory();
         clearEmptyTeams(player);
         team.addEntry(player.getName());
+        Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles, skinChangeNeeded));
         playersRoles.put(player, roles.get(role));
-        Bukkit.getScheduler().runTask(ApiPlugin.getInstance(), () -> roles.get(role).applyJobEffects(player));
         roles.get(role).giveJobItems(player);
+        Bukkit.getScheduler().runTaskLater(ApiPlugin.getInstance(), () ->
+                roles.get(role).applyJobEffects(player), 5L);
         return true;
     }
 
