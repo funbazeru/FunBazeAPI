@@ -4,7 +4,7 @@
 ## Примеры работы
 #### Получение учётной записи пользователя
 ```java
-// Получаем апи
+// Получаем API
 FunBazeApi api = Bukkit.getServer().getServicesManager().load(FunBazeApi.class);
 //Получаем менеджер учётных записей
 UserManager manager = api.getUserManager();
