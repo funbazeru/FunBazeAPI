@@ -41,7 +41,7 @@ meta.setAge(30);
 meta.setGender(UserGender.MALE);
 user.getData().setMeta(meta);
 user.save();
-user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет двадцати!");
+user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет тридцати!");
 ```
 ## Зависимости
 * [PluginMessagingAPI](https://drive.google.com/u/0/uc?id=1hnaEhO6qr6qlRdx4GLRPVbhBtwPBMjuf&export=download)
