@@ -6,6 +6,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.logging.Level;
 
+/**
+ * Класс, реализующий метод подключения к базе данных MySQL
+ * @author DrKapdor
+ */
+
 public class MySQLDatabase implements Database {
 
     private final String dbname;
@@ -13,6 +18,14 @@ public class MySQLDatabase implements Database {
     private final String password;
 
     private Connection connection;
+
+    /**
+     * Конструктор подключения
+     *
+     * @param dbname Название базы данных
+     * @param user Имя пользователя
+     * @param password Пароль пользователя
+     */
 
     public MySQLDatabase(String dbname, String user, String password) {
         this.dbname = dbname;

@@ -4,7 +4,7 @@ import me.drkapdor.funbazeapi.api.user.attachment.roleplay.PromotionData;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
 import me.drkapdor.funbazeapi.api.user.attachment.vk.VkData;
-import me.drkapdor.funbazeapi.api.user.stored.PendingPayment;
+import me.drkapdor.funbazeapi.api.user.records.PendingPayment;
 
 import java.util.ArrayList;
 import java.util.List;

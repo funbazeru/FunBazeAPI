@@ -6,10 +6,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.logging.Level;
 
+/**
+ * Класс, реализующий метод подключения к базе данных SQLite
+ * @author DrKapdor
+ */
+
 public class SQLiteDatabase implements Database {
 
     private final String path;
     private Connection connection;
+
+    /**
+     * Конструктор подключения
+     * @param path Путь к файлу формата .db
+     */
 
     public SQLiteDatabase(String path) {
         this.path = path;

@@ -1,4 +1,4 @@
-package me.drkapdor.funbazeapi.api.user.stored;
+package me.drkapdor.funbazeapi.api.user.records;
 
 import java.util.UUID;
 
@@ -50,5 +50,20 @@ public class PendingPayment {
 
     public long getCreationDate() {
         return creationDate;
+    }
+
+    /**
+     * Периоды погашения платежа
+     */
+
+    public enum PaymentPeriod {
+        /**
+         * Ежемесячный период оплаты
+         */
+        MONTHLY,
+        /**
+         * Единоразовая оплата
+         */
+        PERMANENT
     }
 }

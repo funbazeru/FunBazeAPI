@@ -2,21 +2,15 @@ package me.drkapdor.funbazeapi.handlers;
 
 import de.tr7zw.nbtapi.NBTItem;
 import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.api.event.roleplay.PlayerRoleChangeEvent;
 import me.drkapdor.funbazeapi.api.role.Role;
 import me.drkapdor.funbazeapi.api.role.RolesManager;
 import me.drkapdor.funbazeapi.api.skin.SkinsManager;
 import me.drkapdor.funbazeapi.api.user.FBUser;
-import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserGender;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
 import me.drkapdor.funbazeapi.api.user.manager.CacheMethod;
 import me.drkapdor.funbazeapi.api.user.manager.UserNotLoadedException;
-import me.drkapdor.funbazeapi.api.user.stored.UserSkin;
-import me.drkapdor.funbazeapi.utility.SkinUtils;
-import me.drkapdor.funbazeapi.utility.mojang.AccessToken;
-import me.drkapdor.funbazeapi.utility.mojang.MojangUtils;
-import org.bukkit.Bukkit;
+import me.drkapdor.funbazeapi.api.user.records.UserSkin;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -24,11 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-
-import java.awt.image.BufferedImage;
 
 public class RolesHandler implements Listener {
 

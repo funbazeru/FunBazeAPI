@@ -14,17 +14,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Интерфейс взаимодействия c сервером посредством HTTP-запросов
+ * @author DrKapdor
+ */
 
 public class FunBazeRestApi {
 
     private final RestApiServer server;
     private final Database database;
 
+    /**
+     * Конструктор интерфейса
+     *
+     * @param hostName Адрес, по которому будет доступен интерфейсй
+     * @param serverPort Порт, по которому будет доступно подключение
+     * @param database Хранилище данных, используемое сервером
+     */
+
     public FunBazeRestApi(String hostName, int serverPort, Database database) {
         server = new RestApiServer(hostName, serverPort);
         this.database = database;
         registerStockHandlers();
     }
+
+    /**
+     * Возвращает сервер, отвечающий за обработку HTTP-запросов
+     * @return Сервер, отвечающий за обработку HTTP-запросов
+     */
 
     public RestApiServer getServer() {
         return server;

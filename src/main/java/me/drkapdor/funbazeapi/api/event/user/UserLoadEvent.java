@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 
 /**
  * Событие, вызываемое в момент подгрузки учётной записи из базы данных в кэш
+ * @author DrKapdor
  */
 
 public class UserLoadEvent extends Event {
@@ -15,6 +16,13 @@ public class UserLoadEvent extends Event {
 
     private final FBUser user;
     private final Player player;
+
+    /**
+     * Конструктор события
+     *
+     * @param user Учётная запись игрок
+     * @param player Игрок
+     */
 
     public UserLoadEvent(FBUser user, Player player) {
         this.user = user;
@@ -35,9 +43,19 @@ public class UserLoadEvent extends Event {
         return HANDLER_LIST;
     }
 
+    /**
+     * Возвращает учётную запись игрока
+     * @return Учётная запись
+     */
+
     public FBUser getUser() {
         return user;
     }
+
+    /**
+     * Возвращает игрока
+     * @return Игрок
+     */
 
     public Player getPlayer() {
         return player;

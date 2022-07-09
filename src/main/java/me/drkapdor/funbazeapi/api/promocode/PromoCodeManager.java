@@ -5,6 +5,10 @@ import me.drkapdor.funbazeapi.api.user.FBUser;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Отвечает за регистрацию и активацию промокодов
+ * @author DrKapdor
+ */
 public class PromoCodeManager {
 
     private final Map<String, CustomPromoCode> map = new HashMap<>();

@@ -20,8 +20,8 @@ public class MojangUtils {
 
     static {
         accounts = new LinkedList<>();
-        //accounts.add(new MojangAccount("tarasov-en6d8@rambler.ru", "qif!43^nb1#&S7.A5*ut@W.34k73Sb1t_$rl.k85.h5Mg^h25kg6T6", "d7569781e2b649b2b5e25ea2a46d8d19"));
-        accounts.add(new MojangAccount("eduard150771@gmail.com", "I2*rB+7i5&3bUS({=dg9F=])ub$N2yf", "8e0ba772406240c4bc416538f9173a6c"));
+        //accounts.add(new MojangAccount("tarasov-en6d8@rambler.ru", "qif!43^nbm", 1#&S7.A5*ut@W.34k73Sb1t_$rl.k85.h5Mg^h25kg6T6", "d7569781e2b649b2b5e25ea2a46d8d19"));
+        //accounts.add(new MojangAccount("eduard150771@gmail.co"I2*rB+7i5&3bUS({=dg9F=])ub$N2yf", "8e0ba772406240c4bc416538f9173a6c"));
     }
 
     public static MojangAccount currentAccount() {

@@ -3,7 +3,7 @@ package me.drkapdor.funbazeapi.api.user.attachment.roleplay;
 import java.util.Random;
 
 /**
- * Ролевое ФИ персонажа
+ * Ролевые фамилия и имя персонажа
  * @author DrKapdor
  */
 
@@ -19,8 +19,9 @@ public class UserName {
 
     /**
      * Конструктор ролевого имени персонажа
-     * @param first Имя
-     * @param second Фамилия
+     *
+     * @param first Имя персонажа
+     * @param second Фамилия персонажа
      */
 
     public UserName(String first, String second) {
@@ -29,7 +30,7 @@ public class UserName {
     }
 
     /**
-     * Получить имя персонажа
+     * Возвращает имя персонажа
      * @return Имя
      */
 
@@ -38,7 +39,7 @@ public class UserName {
     }
 
     /**
-     * Получить фамилию персонажа
+     * Возвращает фамилию персонажа
      * @return Фамилия
      */
 
@@ -47,7 +48,7 @@ public class UserName {
     }
 
     /**
-     * Установить имя персонажа
+     * Устанавливает имя персонажа
      * @param name Имя
      */
 
@@ -56,7 +57,7 @@ public class UserName {
     }
 
     /**
-     * Установить фамилию персонажа
+     * Устанавливает фамилию персонажа
      * @param second Фамилия
      */
 
@@ -65,8 +66,8 @@ public class UserName {
     }
 
     /**
-     * Получить имя и фамилию персонажа, разделённые пробелом
-     * @return ФИ персонада
+     * Возвращает имя и фамилию персонажа, разделённые пробелом
+     * @return Разделённые пробелом фамилия и имя персонажа
      */
 
     public String asFull() {

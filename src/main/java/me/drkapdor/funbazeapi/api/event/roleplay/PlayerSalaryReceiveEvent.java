@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Событие, вызываемое в момент окончательной потери игроком сознания
+ * @author DrKapdor
  */
 
 public class PlayerSalaryReceiveEvent extends PlayerEvent {
@@ -14,6 +15,14 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
 
     private int salary;
     private int bonus;
+
+    /**
+     * Конструктор события
+     *
+     * @param player Игрок
+     * @param salary Заработная плата
+     * @param bonus Бонус к заработной плате
+     */
 
     public PlayerSalaryReceiveEvent(Player player, int salary, int bonus) {
         super(player);
@@ -36,7 +45,7 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
     }
 
     /**
-     * Получить зарплату, выданную игроку
+     * Возвращает зарплату, выданную игроку
      * @return Зарплата
      */
 
@@ -45,7 +54,7 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
     }
 
     /**
-     * Изменить зарплату, получаемую игроком
+     * Изменяет зарплату, получаемую игроком
      * @param salary Новая зарплата
      */
 
@@ -54,7 +63,7 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
     }
 
     /**
-     * Изменить бонус к зарплате, получаемой игроком
+     * Изменяет бонус к зарплате, получаемой игроком
      * @param bonus Новый бонус к зарплате
      */
 
@@ -63,7 +72,7 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
     }
 
     /**
-     * Получить бонус к зарплате, выданной игроку
+     * Возвращает бонус к зарплате, выданной игроку
      * @return Бонус к зарплате
      */
 
@@ -72,7 +81,7 @@ public class PlayerSalaryReceiveEvent extends PlayerEvent {
     }
 
     /**
-     * Получить суммарно зарплату и бонус
+     * Возвращает суммарно зарплату и бонус
      * @return Сумма зарплаты и бонуса к ней
      */
 

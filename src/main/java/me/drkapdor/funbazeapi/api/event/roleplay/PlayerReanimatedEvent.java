@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Событие, вызываемое в момент возвращения игрока в чувства
+ * @author DrKapdor
  */
 
 public class PlayerReanimatedEvent extends PlayerEvent {
@@ -13,6 +14,13 @@ public class PlayerReanimatedEvent extends PlayerEvent {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player reAnimator;
+
+    /**
+     * Конструктор события
+     *
+     * @param player Игрок
+     * @param reAnimator Оказавший помощь
+     */
 
     public PlayerReanimatedEvent(Player player, Player reAnimator) {
         super(player);
@@ -35,7 +43,6 @@ public class PlayerReanimatedEvent extends PlayerEvent {
 
     /**
      * Получить игрока, оказавшего помощь
-     *
      * @return Игрок, оказавший помощь
      */
 

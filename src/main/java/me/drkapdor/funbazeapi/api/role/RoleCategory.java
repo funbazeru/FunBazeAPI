@@ -2,6 +2,7 @@ package me.drkapdor.funbazeapi.api.role;
 
 /**
  * Категория роли
+ * @author DrKapdor
  */
 
 public enum RoleCategory {

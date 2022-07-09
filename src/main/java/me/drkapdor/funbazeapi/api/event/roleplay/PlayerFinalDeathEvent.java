@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Событие, вызываемое в момент окончательной потери игроком сознания
+ * @author DrKapdor
  */
 
 public class PlayerFinalDeathEvent extends PlayerEvent {
@@ -13,6 +14,13 @@ public class PlayerFinalDeathEvent extends PlayerEvent {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player killer;
+
+    /**
+     * Конструктор события
+     *
+     * @param player Игрок (Жертва)
+     * @param killer Убийца
+     */
 
     public PlayerFinalDeathEvent(Player player, Player killer) {
         super(player);
@@ -34,8 +42,7 @@ public class PlayerFinalDeathEvent extends PlayerEvent {
     }
 
     /**
-     * Получить убийцу игрока
-     *
+     * Возвращает убийцу игрока
      * @return Убийца игрока
      */
 

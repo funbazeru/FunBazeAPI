@@ -1,4 +1,4 @@
-package me.drkapdor.funbazeapi.api.user.stored;
+package me.drkapdor.funbazeapi.api.user.records;
 
 /**
  * Запись скина пользователя

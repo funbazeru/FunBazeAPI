@@ -19,6 +19,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+/**
+ * Плагин, отвечающий за инициализацию FunBazeAPI
+ * @author DrKapdor
+ */
+
 public class ApiPlugin extends JavaPlugin {
 
     private static ApiPlugin instance;
@@ -29,31 +34,67 @@ public class ApiPlugin extends JavaPlugin {
     private static Database database;
 
     public static File dataFolder;
+    public static File addonsFolder;
     private static FileConfiguration configuration;
+
+    /**
+     * Возвращает экземпляр плагина
+     * @return Экземпляр плагина
+     */
 
     public static ApiPlugin getInstance() {
         return instance;
     }
 
+    /**
+     * Возвращает экземпляр интерфейса
+     * @return Экземпляр интерфейса
+     */
+
     public static FunBazeApi getApi() {
         return api;
     }
+
+    /**
+     * Возвращает экземпляр REST API
+     * @return Экземпляр REST API
+     */
 
     public static FunBazeRestApi getRestApi() {
         return restApi;
     }
 
+    /**
+     * Возвращает текущую базу данных
+     * @return База данных
+     */
+
     public static Database getDatabase() {
         return database;
     }
+
+    /**
+     * Возвращает менеджер регионов
+     * @return Менеджер регионов
+     */
 
     public static RegionManager getRegionManager() {
         return regionManager;
     }
 
+    /**
+     * Возвращает JsonParser
+     * @return JsonParser
+     */
+
     public static JsonParser getJsonParser() {
         return jsonParser;
     }
+
+    /**
+     * Возвращает конфигурацию плагина
+     * @return Конфигурация плагина
+     */
 
     public static FileConfiguration getConfiguration() {
         return configuration;
@@ -65,9 +106,10 @@ public class ApiPlugin extends JavaPlugin {
         loadConfiguration();
         api = new FunBazeApi();
         init();
+        regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
+        api.getAddonsManager().load();
         restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), database);
         restApi.getServer().start();
-        regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
     }
 
     private void loadConfiguration() {
@@ -89,11 +131,13 @@ public class ApiPlugin extends JavaPlugin {
     }
 
     private void createDirectories() {
-        if (!getDataFolder().exists())
-            getDataFolder().mkdir();
+        if (!getDataFolder().exists()) getDataFolder().mkdir();
+
         dataFolder = new File(getDataFolder() + File.separator + "data");
-        if (!dataFolder.exists())
-            dataFolder.mkdir();
+        if (!dataFolder.exists()) dataFolder.mkdir();
+
+        addonsFolder = new File(getDataFolder() + File.separator + "addons");
+        if (!addonsFolder.exists() || !addonsFolder.isDirectory()) addonsFolder.mkdir();
     }
 
     private void registerHandlers() {
@@ -138,5 +182,4 @@ public class ApiPlugin extends JavaPlugin {
                 "`Data` LONGTEXT NOT NULL);";
         database.execute(sql);
     }
-
 }

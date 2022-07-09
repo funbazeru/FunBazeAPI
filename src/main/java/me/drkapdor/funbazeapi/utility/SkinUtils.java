@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.user.stored.UserSkin;
+import me.drkapdor.funbazeapi.api.user.records.UserSkin;
 import me.drkapdor.funbazeapi.utility.mojang.MojangUtils;
 
 import javax.imageio.ImageIO;

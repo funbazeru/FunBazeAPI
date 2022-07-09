@@ -2,7 +2,7 @@ package me.drkapdor.funbazeapi.api.skin;
 
 import com.mojang.authlib.properties.Property;
 import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.user.stored.UserSkin;
+import me.drkapdor.funbazeapi.api.user.records.UserSkin;
 import me.drkapdor.pmapi.bukkit.MessagingAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
@@ -25,9 +25,10 @@ public class SkinsManager {
 
     /**
      * Установить игроку скин
+     *
      * @param player Игрок
      * @param skin Скин
-     * @param updateSelf Отправлять ли игроку пакеты обновления скина
+     * @param updateSelf Отправить игроку пакеты обновления скина
      */
 
     public void setSkin(Player player, UserSkin skin, boolean updateSelf) {
@@ -42,8 +43,9 @@ public class SkinsManager {
 
     /**
      * Обновить скин игрока
+     *
      * @param player Игрок
-     * @param updateSelf Отправлять ли игроку пакеты обновления скина
+     * @param updateSelf Отправить игроку пакеты обновления скина
      */
 
     public void updateSkin(Player player, boolean updateSelf) {
@@ -83,7 +85,7 @@ public class SkinsManager {
     }
 
     /**
-     * Получить список кэшированных скинов и их владельцев
+     * Возвращает таблицу кэшированных скинов и их владельцев
      * @return Список скинов
      */
 

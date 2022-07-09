@@ -23,6 +23,7 @@ public class SavingQueue {
     private static final Gson gson = new GsonBuilder().create();
 
     static {
+        //Таск-таймер (T = 25 / 20 секунд), проверяющий наличие учётных записей в очереди и сохраняющий их в базу данных
         Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
             try {
                 if (queue.contains(nickname.toLowerCase())) {
@@ -44,7 +45,8 @@ public class SavingQueue {
     }
 
     /**
-     * Проверить, отправлена ли учётная запись в очередь на сохранение в базу данных
+     * Проверяет, отправлена ли учётная запись в очередь на сохранение в базу данных
+     *
      * @param user Имя учётной записи (никнейм)
      * @return Поставлена ли учётная запись в очередь
      */
@@ -54,7 +56,7 @@ public class SavingQueue {
     }
 
     /**
-     * Отправить учётную запись в очередь на сохранение в базу данных
+     * Отправляет учётную запись в очередь на сохранение в базу данных
      * @param user Имя учётной записи (никнейм)
      */
 
