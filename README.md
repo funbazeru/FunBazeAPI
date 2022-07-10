@@ -30,7 +30,6 @@ try {
 UserBalance balance = user.getData().getBalance();
 balance.addMoney(1500); //Пополняем баланс игровых рублей
 balance.addVouchers(150); //Пополняем баланс донат-валюты
-user.getData().setBalance(balance);
 user.save();
 user.asBukkit().sendMessage("Ваш баланс был пополнен!");
 ```
@@ -39,7 +38,6 @@ user.asBukkit().sendMessage("Ваш баланс был пополнен!");
 UserMeta meta = user.getData().getMeta();
 meta.setAge(30);
 meta.setGender(UserGender.MALE);
-user.getData().setMeta(meta);
 user.save();
 user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет тридцати!");
 ```
