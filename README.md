@@ -12,7 +12,10 @@
 ```
 #### II. Добавляем зависимость в plugin.yml
 ```yaml
-depend: [ FunBazeAPI ]
+depend: 
+  - SimplePlugin
+  - ...
+  - FunBazeAPI
 ```
 ## Примеры работы
 #### Получение учётной записи пользователя
