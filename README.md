@@ -9,8 +9,8 @@
   <artifactId>funbazeapi</artifactId>
   <version>1.0.1-RELEASE</version>
 </dependency>
-#### II. Добавляем зависимость в plugin.yml
 ```
+#### II. Добавляем зависимость в plugin.yml
 ```yaml
 depend: [ FunBazeAPI ]
 ```
