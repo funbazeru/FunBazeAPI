@@ -222,9 +222,9 @@ public class RolesManager {
      */
 
     public void setRoleCoolDown(Player player, String role, int seconds) {
-        HashMap<String, Long> cooldowns = rolesCoolDowns.containsKey(player.getName()) ? rolesCoolDowns.get(player.getName()) : new HashMap<>();
-        cooldowns.put(role, System.currentTimeMillis() + seconds * 1000L);
-        rolesCoolDowns.put(player.getName(), cooldowns);
+        HashMap<String, Long> coolDowns = rolesCoolDowns.containsKey(player.getName()) ? rolesCoolDowns.get(player.getName()) : new HashMap<>();
+        coolDowns.put(role, System.currentTimeMillis() + seconds * 1000L);
+        rolesCoolDowns.put(player.getName(), coolDowns);
     }
 
     /**

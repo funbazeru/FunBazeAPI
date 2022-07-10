@@ -3,6 +3,7 @@ package me.drkapdor.funbazeapi;
 import com.google.gson.JsonParser;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import me.drkapdor.funbazeapi.addon.AddonsCommand;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.database.Database;
 import me.drkapdor.funbazeapi.database.DatabaseType;
@@ -108,18 +109,21 @@ public class ApiPlugin extends JavaPlugin {
         init();
         regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
         api.getAddonsManager().load();
-        restApi = new FunBazeRestApi(configuration.getString("REST_HOSTNAME"),configuration.getInt("REST_PORT"), database);
-        restApi.getServer().start();
+        if (configuration.getBoolean("REST.START")) {
+            restApi = new FunBazeRestApi(configuration.getString("REST.HOSTNAME"), configuration.getInt("REST.PORT"), database);
+            restApi.getServer().start();
+        }
     }
 
     private void loadConfiguration() {
         configuration = getConfig();
-        configuration.addDefault("DATABASE_TYPE", "MySQL");
-        configuration.addDefault("DATABASE_NAME", "funbaze");
-        configuration.addDefault("DATABASE_USER", "server");
-        configuration.addDefault("DATABASE_PASSWORD", "hardpassword");
-        configuration.addDefault("REST_HOSTNAME", "127.0.0.1");
-        configuration.addDefault("REST_PORT", 80);
+        configuration.addDefault("DATABASE.TYPE", "MySQL");
+        configuration.addDefault("DATABASE.NAME", "funbaze");
+        configuration.addDefault("DATABASE.USER", "server");
+        configuration.addDefault("DATABASE.PASSWORD", "hardpassword");
+        configuration.addDefault("REST.ENABLED", true);
+        configuration.addDefault("REST.HOSTNAME", "127.0.0.1");
+        configuration.addDefault("REST.PORT", 80);
         configuration.options().copyDefaults(true);
         saveConfig();
     }
@@ -127,6 +131,7 @@ public class ApiPlugin extends JavaPlugin {
     private void init() {
         connectDatabase();
         createDirectories();
+        registerCommands();
         registerHandlers();
     }
 
@@ -140,6 +145,10 @@ public class ApiPlugin extends JavaPlugin {
         if (!addonsFolder.exists() || !addonsFolder.isDirectory()) addonsFolder.mkdir();
     }
 
+    private void registerCommands() {
+        getCommand("addons").setExecutor(new AddonsCommand());
+    }
+
     private void registerHandlers() {
         getServer().getPluginManager().registerEvents(new ConnectionHandler(), this);
         getServer().getPluginManager().registerEvents(new RolesHandler(api.getRolesManager()), this);
@@ -147,13 +156,13 @@ public class ApiPlugin extends JavaPlugin {
 
     private void connectDatabase() {
         getLogger().log(Level.INFO, "§aОсуществляется подключение к базе данных...");
-        DatabaseType type = DatabaseType.valueOf(configuration.getString("DATABASE_TYPE"));
+        DatabaseType type = DatabaseType.valueOf(configuration.getString("DATABASE.TYPE"));
         switch (type) {
             case MySQL: {
                 database = new MySQLDatabase(
-                        configuration.getString("DATABASE_NAME"),
-                        configuration.getString("DATABASE_USER"),
-                        configuration.getString("DATABASE_PASSWORD")
+                        configuration.getString("DATABASE.NAME"),
+                        configuration.getString("DATABASE.USER"),
+                        configuration.getString("DATABASE.PASSWORD")
                 );
                 break;
             }

@@ -1,8 +1,15 @@
 package me.drkapdor.funbazeapi.addon;
 
+import com.comphenix.protocol.wrappers.Pair;
 import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.addon.exception.SameAddonException;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,16 +25,18 @@ import java.util.jar.JarFile;
 public class AddonsManager {
 
     private final Map<String, FBAddon> addons;
+    private final Map<String, Collection<Listener>> listenerMap;
 
     public AddonsManager() {
         addons = new HashMap<>();
+        listenerMap = new HashMap<>();
     }
 
     /**
-     * Подгружает в память дополнения из директории дополнений
+     * Подгружает в память дополнения из директории
      */
 
-    public void load() {
+    public boolean load() {
         for (File file : Objects.requireNonNull(ApiPlugin.addonsFolder.listFiles())) {
             try {
                 JarFile jarFile = new JarFile(file.getPath());
@@ -42,29 +51,37 @@ public class AddonsManager {
                         Object object = loadedClass.newInstance();
                         if (object instanceof FBAddon) {
                             FBAddon addon = (FBAddon) object;
+                            if (addons.containsKey(addon.getName()))
+                                throw new SameAddonException("Невозможно загрузить несколько дополнений с одинаковым названием: " + addon.getName() + " (Версия " + addon.getVersion() + ", автор " + addon.getAuthor() + ")");
                             addon.init();
                             addons.put(addon.getName(), addon);
                         }
+                        urlClassLoader.close();
                     }
                 }
-            } catch (IOException | ClassNotFoundException |
-                    InstantiationException | IllegalAccessException exception) {
+            } catch (IOException | ClassNotFoundException | InstantiationException |
+                    IllegalAccessException | SameAddonException exception) {
                 exception.printStackTrace();
+                return false;
             }
         }
+        return true;
     }
 
     /**
      * Выполняет переподгрузку дополнений
      */
 
-    public void reload() {
+    public boolean reload() {
         addons.clear();
-        load();
+        for (Collection<Listener> listeners : listenerMap.values())
+            for (Listener listener : listeners) HandlerList.unregisterAll(listener);
+        return load();
     }
 
     /**
-     * Возвращает дополнений по названию
+     * Возвращает дополнение по названию
+     *
      * @param name Название
      * @return Дополнение
      */
@@ -80,5 +97,19 @@ public class AddonsManager {
 
     public Collection<FBAddon> getAddons() {
         return addons.values();
+    }
+
+    /**
+     * Зарегестрировать слушатель событий дополнения
+     *
+     * @param addon Дополнение
+     * @param listener Слушатель событий
+     */
+
+    public void registerListener(FBAddon addon, Listener listener) {
+        Bukkit.getPluginManager().registerEvents(listener, ApiPlugin.getInstance());
+        if (!listenerMap.containsKey(addon.getName()))
+            listenerMap.put(addon.getName(), new ArrayList<>());
+        listenerMap.get(addon.getName()).add(listener);
     }
 }

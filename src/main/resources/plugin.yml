@@ -12,3 +12,6 @@ depend:
   - PluginMessagingAPI
 
 main: me.drkapdor.funbazeapi.ApiPlugin
+
+commands:
+  addons:
