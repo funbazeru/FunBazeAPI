@@ -2,8 +2,8 @@
 ### Интерфейс взаимодействия с системами проекта **[FunBaze.ru](https://funbaze.ru/)**<br>Подробная документация: https://funbaze.ru/javadocs/api
 -----------------------------------
 ## Установка
-#### Maven
-```
+#### Добавляем Maven зависимость в pom.xml
+```xml
 <dependency>
   <groupId>org.funbaze</groupId>
   <artifactId>funbazeapi</artifactId>
