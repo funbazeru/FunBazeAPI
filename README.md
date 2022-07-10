@@ -12,6 +12,10 @@
 ```
 ##### II. Добавляем зависимость в plugin.yml
 ```yaml
+name: MyPlugin
+author: Coder
+main: me.coder.myplugin.Main
+version: 1.0-SNAPSHOT
 depend: 
   - SimplePlugin
   - ...
