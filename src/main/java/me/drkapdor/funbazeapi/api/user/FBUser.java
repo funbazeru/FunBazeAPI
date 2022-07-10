@@ -2,7 +2,6 @@ package me.drkapdor.funbazeapi.api.user;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.user.attachment.FBID;
 import me.drkapdor.funbazeapi.api.user.attachment.UserData;
@@ -164,21 +163,6 @@ public class FBUser {
 
     public Player asBukkit() {
         return Bukkit.getPlayerExact(nickname);
-    }
-
-    /**
-     * Проверить местонахождение пользователя в регионе {@link ProtectedRegion}
-     * @param id Идентификатор региона
-     * @return Находится ли пользователь в регионе
-     */
-
-    public boolean isInRegion(String id) {
-        Player player = asBukkit();
-        if (player != null) {
-            for (ProtectedRegion region : ApiPlugin.getRegionManager().getApplicableRegions(player.getLocation()))
-                if (region.getId().equals(id)) return true;
-        }
-        return false;
     }
 
     /**

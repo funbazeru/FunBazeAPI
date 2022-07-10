@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>FunbazeAPI</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.funbaze</groupId>
+    <artifactId>FunBazeAPI</artifactId>
+    <version>2.1-RELEASE</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -48,4 +48,12 @@
             <version>4.7.0</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub FunBaze Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/funbazeru/FunBazeAPI</url>
+        </repository>
+    </distributionManagement>
 </project>

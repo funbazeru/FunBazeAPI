@@ -3,7 +3,6 @@ package me.drkapdor.funbazeapi.api.skin;
 import com.mojang.authlib.properties.Property;
 import me.drkapdor.funbazeapi.ApiPlugin;
 import me.drkapdor.funbazeapi.api.user.records.UserSkin;
-import me.drkapdor.pmapi.bukkit.MessagingAPI;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -33,7 +32,7 @@ public class SkinsManager {
 
     public void setSkin(Player player, UserSkin skin, boolean updateSelf) {
         if (skin != null && !skin.getValue().isEmpty() && !skin.getSignature().isEmpty()) {
-            MessagingAPI.getInstance().sendCustomData("skins", player.getName() + ":::" + skin.getValue() + ":::" + skin.getSignature());
+            //MessagingAPI.getInstance().sendCustomData("skins", player.getName() + ":::" + skin.getValue() + ":::" + skin.getSignature());
             Bukkit.getScheduler().runTaskLater(ApiPlugin.getInstance(), () -> {
                 ((CraftPlayer)player).getHandle().getProfile().getProperties().put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
                 updateSkin(player, updateSelf);

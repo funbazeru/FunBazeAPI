@@ -1,8 +1,6 @@
 package me.drkapdor.funbazeapi;
 
 import com.google.gson.JsonParser;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.managers.RegionManager;
 import me.drkapdor.funbazeapi.addon.AddonsCommand;
 import me.drkapdor.funbazeapi.api.FunBazeApi;
 import me.drkapdor.funbazeapi.database.Database;
@@ -12,7 +10,6 @@ import me.drkapdor.funbazeapi.database.SQLiteDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;
 import me.drkapdor.funbazeapi.rest.FunBazeRestApi;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,7 +28,6 @@ public class ApiPlugin extends JavaPlugin {
     private static FunBazeApi api;
     private static FunBazeRestApi restApi;
     private static final JsonParser jsonParser = new JsonParser();
-    private static RegionManager regionManager;
     private static Database database;
 
     public static File dataFolder;
@@ -75,15 +71,6 @@ public class ApiPlugin extends JavaPlugin {
     }
 
     /**
-     * Возвращает менеджер регионов
-     * @return Менеджер регионов
-     */
-
-    public static RegionManager getRegionManager() {
-        return regionManager;
-    }
-
-    /**
      * Возвращает JsonParser
      * @return JsonParser
      */
@@ -107,7 +94,6 @@ public class ApiPlugin extends JavaPlugin {
         loadConfiguration();
         api = new FunBazeApi();
         init();
-        regionManager = WorldGuardPlugin.inst().getRegionManager(Bukkit.getWorld("town"));
         api.getAddonsManager().load();
         if (configuration.getBoolean("REST.START")) {
             restApi = new FunBazeRestApi(configuration.getString("REST.HOSTNAME"), configuration.getInt("REST.PORT"), database);
