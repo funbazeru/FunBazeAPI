@@ -17,7 +17,6 @@ author: Coder
 main: me.coder.myplugin.Main
 version: 1.0-SNAPSHOT
 depend: 
-  - SimplePlugin
   - ...
   - FunBazeAPI
 ```
