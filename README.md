@@ -1,8 +1,8 @@
 # FunBazeAPI 
 ### Интерфейс взаимодействия с системами проекта **[FunBaze.ru](https://funbaze.ru/)**<br>Подробная документация: https://funbaze.ru/javadocs/api
 -----------------------------------
-### Установка
-#### I. Добавляем Maven зависимость в pom.xml
+## Установка
+##### I. Добавляем Maven зависимость в pom.xml
 ```xml
 <dependency>
   <groupId>org.funbaze</groupId>
@@ -10,7 +10,7 @@
   <version>1.0.1-RELEASE</version>
 </dependency>
 ```
-#### II. Добавляем зависимость в plugin.yml
+##### II. Добавляем зависимость в plugin.yml
 ```yaml
 depend: 
   - SimplePlugin
