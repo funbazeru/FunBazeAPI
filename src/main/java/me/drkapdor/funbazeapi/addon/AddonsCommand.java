@@ -16,11 +16,8 @@ public class AddonsCommand implements CommandExecutor {
             if (args.length == 1) {
                 switch (args[0].toLowerCase()) {
                     case "reload": {
-                        Bukkit.getServer().getLogger().info("§6[Addons] §eМодуль аддонов перезагружается...");
-                        if (addonManager.reload()) {
+                        if (addonManager.reload())
                             sender.sendMessage("§a§lFun§e§lBaze §8○ §fСистема аддонов успешно перезагружена!");
-                            Bukkit.getServer().getLogger().info("§6[Addons] §eМодуль аддонов успешно перезагружен!");
-                        }
                     }
                     case "list": {
                         StringBuilder addonsList = new StringBuilder();
