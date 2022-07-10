@@ -47,13 +47,17 @@ public class FunBazeRestApi {
         return server;
     }
 
+    /**
+     * Регистрирует стандартные сервисы
+     */
+
     private void registerStockHandlers() {
         server.registerHandler("/api/user/rpname", (exchange -> {
             if ("GET".equals(exchange.getRequestMethod())) {
                 Map<String, List<String>> params = RestApiUtils.splitQuery(exchange.getRequestURI().getRawQuery());
                 List<String> nickname = params.get("nick");
                 if (nickname != null) {
-                    ResultSet resultSet = database.query("SELECT `Name` from Players where `Nickname`='" + nickname.get(0) + "'");
+                    ResultSet resultSet = database.query("SELECT `Name` FROM Players WHERE `Nickname` = '" + nickname.get(0) + "'");
                     try {
                         if (resultSet.next()) {
                             String response = "<html>" +
@@ -88,7 +92,7 @@ public class FunBazeRestApi {
                 String nickname = new ArrayList<>(params.get("nick")).get(0);
                 String format = new ArrayList<>(params.get("format")).get(0);
                 if (nickname != null && format != null) {
-                    ResultSet resultSet = database.query("SELECT `Data` from Players where `Nickname`='" + nickname + "'");
+                    ResultSet resultSet = database.query("SELECT `Data` FORM Players WHERE `Nickname` = '" + nickname + "'");
                     try {
                         if (resultSet.next()) {
                             JsonElement data = new JsonParser().parse(resultSet.getString("Data"));
