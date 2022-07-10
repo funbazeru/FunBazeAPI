@@ -41,7 +41,11 @@ meta.setGender(UserGender.MALE);
 user.save();
 user.asBukkit().sendMessage("Теперь вы солидный молодой человек, на вид лет тридцати!");
 ```
+
+## Требования
+Spigot версии 1.12.2
+
 ## Зависимости
-* [PluginMessagingAPI](https://drive.google.com/u/0/uc?id=1hnaEhO6qr6qlRdx4GLRPVbhBtwPBMjuf&export=download)
-* ProtocolLib
-* NBTAPI
+* [PluginMessagingAPI](https://github.com/DrKapdor/pmapi)
+* [ProtocolLib](https://github.com/dmulloy2/ProtocolLib)
+* [NBTAPI](https://github.com/tr7zw/Item-NBT-API)
