@@ -44,16 +44,16 @@ try {
 }
 ```
 ### Взаимодействие с учётной записью
-#### Управление балансом пользователя
 ```java
+//Управление балансом пользователя
 UserBalance balance = user.getData().getBalance();
 balance.addMoney(1500); //Пополняем баланс игровых рублей
 balance.addVouchers(150); //Пополняем баланс донат-валюты
 user.save();
 user.asBukkit().sendMessage("Ваш баланс был пополнен!");
 ```
-#### Управление метаданными ролевого персонажа
 ```java
+//Управление метаданными ролевого персонажа
 UserMeta meta = user.getData().getMeta();
 meta.setAge(30);
 meta.setGender(UserGender.MALE);
