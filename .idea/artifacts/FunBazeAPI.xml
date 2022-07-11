@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FunBazeAPI">
+    <output-path>$USER_HOME$/Рабочий стол/FBServer/plugins</output-path>
+    <root id="archive" name="FunBazeAPI.jar">
+      <element id="module-output" name="FunBazeAPI" />
+    </root>
+  </artifact>
+</component>

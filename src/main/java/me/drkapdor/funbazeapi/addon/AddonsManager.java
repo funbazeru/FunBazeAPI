@@ -34,6 +34,7 @@ public class AddonsManager {
 
     /**
      * Подгружает в память дополнения из директории
+     * @return Успешна ли подгрузка
      */
 
     public boolean load() {
@@ -70,6 +71,7 @@ public class AddonsManager {
 
     /**
      * Выполняет переподгрузку дополнений
+     * @return Успешна ли переподгрузка
      */
 
     public boolean reload() {
