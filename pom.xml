@@ -6,7 +6,7 @@
 
     <groupId>org.funbaze</groupId>
     <artifactId>funbazeapi</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.1-RELEASE</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -48,21 +48,26 @@
             <artifactId>ProtocolLib</artifactId>
             <version>4.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>me.drkapdor</groupId>
+            <artifactId>pmapi</artifactId>
+            <version>1.0-RELEASE</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub funbazeru Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/funbazeru/FunBazeAPI</url>
+            <url>https://maven.pkg.github.com/funbazeru/funbazeapi</url>
         </repository>
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/funbazeru/FunBazeAPI.git</connection>
-        <developerConnection>scm:git:https://github.com/funbazeru/FunBazeAPI.git
+        <connection>scm:git:git://github.com/funbazeru/funbazeapi.git</connection>
+        <developerConnection>scm:git:https://github.com/funbazeru/funbazeapi.git
         </developerConnection>
-        <url>https://github.com/funbazeru/FunBazeAPI</url>
+        <url>https://github.com/funbazeru/funbazeapi</url>
         <tag>github-example-package</tag>
     </scm>
 
