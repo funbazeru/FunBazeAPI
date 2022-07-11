@@ -2,7 +2,7 @@
 ### Интерфейс взаимодействия с системами проекта **[FunBaze.ru](https://funbaze.ru/)**<br>Подробная документация: https://funbaze.ru/javadoc/api
 -----------------------------------
 ## Установка плагина
-#### I. Добавляем Maven зависимость в __pom.xml__
+#### I. Добавляем Maven зависимость в `pom.xml`
 ```xml
 <dependency>
   <groupId>org.funbaze</groupId>
@@ -10,7 +10,7 @@
   <version>1.0.1-RELEASE</version>
 </dependency>
 ```
-#### II. Добавляем зависимость в __plugin.yml__
+#### II. Добавляем зависимость в `plugin.yml`
 ```yaml
 name: MyPlugin
 author: Coder
