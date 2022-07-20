@@ -1,7 +1,6 @@
 package me.drkapdor.funbazeapi.handlers;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.event.auth.PlayerAuthenticateEvent;
 import me.drkapdor.funbazeapi.api.event.auth.PlayerRegisterEvent;
 import me.drkapdor.funbazeapi.api.event.user.UserLoadEvent;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -23,15 +21,15 @@ public class ConnectionHandler implements Listener {
 
     @EventHandler (priority = EventPriority.NORMAL)
     public void onJoin(PlayerLoginEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () ->
-                ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION));
+        Bukkit.getScheduler().runTaskAsynchronously(FunBazeApiPlugin.getInstance(), () ->
+                FunBazeApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION));
     }
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onRegister(PlayerRegisterEvent event) {
-        FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
+        FBUser user = FunBazeApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
         if (user == null)
-            user = ApiPlugin.getApi().getUserManager().createUser(event.getPlayer());
+            user = FunBazeApiPlugin.getApi().getUserManager().createUser(event.getPlayer());
         VkData vkData = new VkData();
         vkData.setUserId(event.getVkId());
         vkData.setAccessToken(event.getAccessToken());
@@ -43,7 +41,7 @@ public class ConnectionHandler implements Listener {
     @EventHandler (priority = EventPriority.HIGH)
     public void onAuthenticate(PlayerAuthenticateEvent event) {
         if (event.isSuccess() && !event.isBySession()) {
-            FBUser user = ApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
+            FBUser user = FunBazeApiPlugin.getApi().getUserManager().load(event.getPlayer().getName(), CacheMethod.GAME_SESSION);
             VkData vk = user.getData().getVk();
             boolean needUpdate = false;
             if (vk.getEmail() != null && !vk.getEmail().equals(event.getEmail())) {
@@ -65,17 +63,17 @@ public class ConnectionHandler implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Bukkit.getScheduler().runTaskLaterAsynchronously(ApiPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(FunBazeApiPlugin.getInstance(), () -> {
             if (Bukkit.getPlayerExact(player.getName()) == null)
-                ApiPlugin.getApi().getUserManager().unCache(player.getName());
+                FunBazeApiPlugin.getApi().getUserManager().unCache(player.getName());
         }, 400);
     }
 
     @EventHandler
     public void onLoad(UserLoadEvent event) {
         FBUser user = event.getUser();
-        File userFolder = new File(ApiPlugin.dataFolder + File.separator + user.getNickname());
-        Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
+        File userFolder = new File(FunBazeApiPlugin.dataFolder + File.separator + user.getNickname());
+        Bukkit.getScheduler().runTaskAsynchronously(FunBazeApiPlugin.getInstance(), () -> {
             File skinsFolder;
             if (!userFolder.exists()) {
                 userFolder.mkdir();

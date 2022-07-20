@@ -2,7 +2,7 @@ package me.drkapdor.funbazeapi.api.user.manager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.event.user.UserLoadEvent;
 import me.drkapdor.funbazeapi.api.event.user.UserPostProcessEvent;
 import me.drkapdor.funbazeapi.api.user.FBUser;
@@ -30,7 +30,7 @@ public class UserManager {
 
     public UserManager() {
         cacheMap = new HashMap<>();
-        Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(FunBazeApiPlugin.getInstance(), () -> {
             for (Map.Entry<String, CachedUser> entry : new HashSet<>(cacheMap.entrySet())) {
                 if (entry.getValue().isExpired())
                     cacheMap.remove(entry.getKey().toLowerCase());
@@ -53,13 +53,13 @@ public class UserManager {
         user.save(true);
         //Отправляем учётную запись в кэш
         cacheMap.put(player.getName().toLowerCase(), new CachedUser(user, CacheMethod.DEFAULT));
-        ApiPlugin.getInstance().getServer().getPluginManager().callEvent(new UserLoadEvent(user, player));
+        FunBazeApiPlugin.getInstance().getServer().getPluginManager().callEvent(new UserLoadEvent(user, player));
         //Создаём папку для будущих скинов
-        Bukkit.getScheduler().runTaskLater(ApiPlugin.getInstance(), () -> {
-            File userFolder = new File(ApiPlugin.dataFolder + File.separator + player.getName());
+        Bukkit.getScheduler().runTaskLater(FunBazeApiPlugin.getInstance(), () -> {
+            File userFolder = new File(FunBazeApiPlugin.dataFolder + File.separator + player.getName());
             if (!userFolder.isDirectory())
                 if (userFolder.mkdir()) new File(userFolder + File.separator + "skins").mkdir();
-            ApiPlugin.getInstance().getServer().getPluginManager().callEvent(new UserPostProcessEvent(cacheMap.get(user.getNickname().toLowerCase()).getContent()));
+            FunBazeApiPlugin.getInstance().getServer().getPluginManager().callEvent(new UserPostProcessEvent(cacheMap.get(user.getNickname().toLowerCase()).getContent()));
         }, 20L);
         return user;
     }
@@ -79,14 +79,14 @@ public class UserManager {
             return user;
         } else {
             if (!cacheMap.containsKey(name.toLowerCase())) {
-                ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT * FROM Players WHERE Nickname = '" + name + "'");
+                ResultSet resultSet = FunBazeApiPlugin.getDatabase().query("SELECT * FROM Players WHERE Nickname = '" + name + "'");
                 try {
                     if (resultSet.next()) {
                         FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));
                         Gson gson = new GsonBuilder().create();
-                        user.setUserName(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
-                        user.setAccess(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));
-                        user.setData(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Data")), UserData.class));
+                        user.setUserName(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
+                        user.setAccess(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));
+                        user.setData(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Data")), UserData.class));
                         cacheMap.put(name.toLowerCase(), new CachedUser(user, cacheMethod));
                         Bukkit.getPluginManager().callEvent(new UserLoadEvent(user, Bukkit.getPlayerExact(name)));
                         return user;
@@ -132,7 +132,7 @@ public class UserManager {
      */
 
     public FBUser getUser(FBID id, CacheMethod cacheMethod) {
-        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players ID = '" + id + "'");
+        ResultSet resultSet = FunBazeApiPlugin.getDatabase().query("SELECT Nickname FROM Players ID = '" + id + "'");
         try {
             if (resultSet.next())
                 return load(resultSet.getString("Nickname"), cacheMethod);
@@ -161,7 +161,7 @@ public class UserManager {
      */
 
     public FBUser getUser(long discordId) {
-        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE DiscordID = '" + discordId + "'");
+        ResultSet resultSet = FunBazeApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE DiscordID = '" + discordId + "'");
         try {
             if (resultSet.next())
                 return load(resultSet.getString("Nickname"), CacheMethod.OFFLINE_REQUEST);
@@ -180,7 +180,7 @@ public class UserManager {
 
     public Collection<FBUser> getUsersByName(UserName userName) {
         List<FBUser> users = new ArrayList<>();
-        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE Name = '" + new Gson().toJson(userName) + "'");
+        ResultSet resultSet = FunBazeApiPlugin.getDatabase().query("SELECT Nickname FROM Players WHERE Name = '" + new Gson().toJson(userName) + "'");
         try {
             while (resultSet.next())
                 users.add(load(resultSet.getString("Nickname"), CacheMethod.OFFLINE_REQUEST));
@@ -197,14 +197,14 @@ public class UserManager {
 
     public Collection<FBUser> getAllUsers() {
         LinkedList<FBUser> users = new LinkedList<>();
-        ResultSet resultSet = ApiPlugin.getDatabase().query("SELECT * FROM Players");
+        ResultSet resultSet = FunBazeApiPlugin.getDatabase().query("SELECT * FROM Players");
         try {
             while (resultSet.next()) {
                 FBUser user = new FBUser(FBID.fromString(resultSet.getString("ID")), resultSet.getString("Nickname"), resultSet.getString("IP"));
                 Gson gson = new GsonBuilder().create();
-                user.setUserName(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
-                user.setAccess(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));
-                user.setData(gson.fromJson(ApiPlugin.getJsonParser().parse(resultSet.getString("Data")), UserData.class));
+                user.setUserName(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Name")), UserName.class));
+                user.setAccess(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Access")), UserAccess.class));
+                user.setData(gson.fromJson(FunBazeApiPlugin.getJsonParser().parse(resultSet.getString("Data")), UserData.class));
                 if (cacheMap.containsKey(user.getNickname().toLowerCase()))
                     cacheMap.put(user.getNickname().toLowerCase(), new CachedUser(user, cacheMap.get(user.getNickname().toLowerCase()).getCacheMethod()));
                 users.add(user);

@@ -6,8 +6,6 @@ website: "https://dev.funbaze.ru/"
 
 depend:
   - ProtocolLib
-  - WorldGuard
-  - WorldEdit
   - NBTAPI
   - PluginMessagingAPI
 

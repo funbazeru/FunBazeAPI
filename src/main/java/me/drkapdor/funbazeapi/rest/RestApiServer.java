@@ -2,7 +2,7 @@ package me.drkapdor.funbazeapi.rest;
 
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
@@ -58,10 +58,10 @@ public class RestApiServer {
      */
 
     public void start() {
-        Bukkit.getScheduler().runTask(ApiPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(FunBazeApiPlugin.getInstance(), () -> {
             server.setExecutor(null);
             server.start();
         });
-        ApiPlugin.getInstance().getLogger().info("§aREST API сервер был успешно запущен!");
+        FunBazeApiPlugin.getInstance().getLogger().info("§aREST API сервер был успешно запущен!");
     }
 }

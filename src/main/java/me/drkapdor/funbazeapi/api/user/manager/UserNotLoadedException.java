@@ -1,12 +1,11 @@
 package me.drkapdor.funbazeapi.api.user.manager;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 
 public class UserNotLoadedException extends Exception {
 
     public UserNotLoadedException(String nickname) {
         super("Информация о пользователе " + nickname + " ещё не загружена из хранилища данных!");
-        ApiPlugin.getApi().getUserManager().load(nickname, CacheMethod.OFFLINE_REQUEST);
+        FunBazeApiPlugin.getApi().getUserManager().load(nickname, CacheMethod.OFFLINE_REQUEST);
     }
 }

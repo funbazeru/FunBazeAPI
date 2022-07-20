@@ -2,7 +2,7 @@ package me.drkapdor.funbazeapi.api.user;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.user.attachment.FBID;
 import me.drkapdor.funbazeapi.api.user.attachment.UserData;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserAccess;
@@ -57,7 +57,7 @@ public class FBUser {
     }
 
     /**
-     * Получить уникальный идентификатор формата {@link FBID}
+     * Возвращает уникальный идентификатор формата {@link FBID}
      * @return Уникальный идентификатор формата {@link FBID}
      */
 
@@ -66,7 +66,7 @@ public class FBUser {
     }
 
     /**
-     * Получить никнейм пользователя
+     * Возвращает никнейм пользователя
      * @return Никнейм пользователя
      */
 
@@ -75,7 +75,7 @@ public class FBUser {
     }
 
     /**
-     * Получить IP адрес пользователя
+     * Возвращает IP адрес пользователя
      * @return IP адрес пользователя
      */
 
@@ -84,7 +84,7 @@ public class FBUser {
     }
 
     /**
-     * Получить DiscordID пользователя
+     * Возвращает DiscordID пользователя
      * @return DiscordID адрес пользователя
      */
 
@@ -93,7 +93,7 @@ public class FBUser {
     }
 
     /**
-     * Проверка на привязку учётной записи к Discord
+     * Проверяет на привязку учётной записи к Discord
      * @return Учётная запись привязана в Discord
      */
 
@@ -102,7 +102,7 @@ public class FBUser {
     }
 
     /**
-     * Получить ролевое имя пользователя
+     * Возвращает ролевое имя пользователя
      * @return Ролевое имя
      */
 
@@ -111,7 +111,7 @@ public class FBUser {
     }
 
     /**
-     * Установить ролевое имя пользователя
+     * Устанавливает ролевое имя пользователя
      * @param userName Ролевое имя
      */
 
@@ -120,7 +120,7 @@ public class FBUser {
     }
 
     /**
-     * Установить набор атрибутов пользователя
+     * Устанавливает набор атрибутов пользователя
      * @param userData Набор атрибутов
      */
 
@@ -129,7 +129,7 @@ public class FBUser {
     }
 
     /**
-     * Получить набор атрибутов пользователя
+     * Возвращает набор атрибутов пользователя
      * @return userData Набор атрибутов
      */
 
@@ -138,7 +138,7 @@ public class FBUser {
     }
 
     /**
-     * Получить настройки доступа к учётной записи
+     * Возвращает настройки доступа к учётной записи
      * @return Настройки доступа
      */
 
@@ -147,7 +147,7 @@ public class FBUser {
     }
 
     /**
-     * Установить настройки доступа к учётной записи
+     * Устанавливает настройки доступа к учётной записи
      * @param userAccess Настройки доступа
      */
 
@@ -157,7 +157,7 @@ public class FBUser {
     }
 
     /**
-     * Получить пользователя в виде игрока {@link Player}
+     * Возвращает пользователя в виде игрока {@link Player}
      * @return Игрок
      */
 
@@ -166,13 +166,14 @@ public class FBUser {
     }
 
     /**
-     * Получить список список сгенерированных скинов
+     * Возвращает список список сгенерированных скинов
      * @return Список скинов
      */
 
+    @Deprecated
     public Map<String, BufferedImage> getCustomSkins() {
         Map<String, BufferedImage> skins = new HashMap<>();
-        File userFolder = new File(ApiPlugin.dataFolder + File.separator + nickname);
+        File userFolder = new File(FunBazeApiPlugin.dataFolder + File.separator + nickname);
         if (userFolder.isDirectory()) {
             File skinsFolder = new File(userFolder + File.separator + "skins");
             if (skinsFolder.isDirectory()) {
@@ -189,13 +190,14 @@ public class FBUser {
     }
 
     /**
-     * Получить сгенерированный скин
+     * Возвращает сгенерированный скин
      * @param skinId Идентификатор скина
      * @return Развертка скина в формате png (64x64 или 64x32)
      */
 
+    @Deprecated
     public BufferedImage getCustomSkin(String skinId) {
-        File userFolder = new File(ApiPlugin.dataFolder + File.separator + nickname);
+        File userFolder = new File(FunBazeApiPlugin.dataFolder + File.separator + nickname);
         if (userFolder.isDirectory()) {
             File skin = new File(userFolder + File.separator + "skins" + File.separator + skinId + ".png");
             if (skin.exists()) {
@@ -210,14 +212,15 @@ public class FBUser {
     }
 
     /**
-     * Получить сгенерированный скин
+     * Возвращает сгенерированный скин
      * @param skinId Идентификатор скина
      * @param byDefault Файл скина, устанавиваемый по умолчанию
      * @return Развертка скина в формате png (64x64 или 64x32)
      */
 
+    @Deprecated
     public BufferedImage getCustomSkin(String skinId, File byDefault) {
-        File userFolder = new File(ApiPlugin.dataFolder + File.separator + nickname);
+        File userFolder = new File(FunBazeApiPlugin.dataFolder + File.separator + nickname);
         if (userFolder.isDirectory()) {
             File skin = new File(userFolder + File.separator + "skins" + File.separator + skinId + ".png");
             try {
@@ -232,7 +235,7 @@ public class FBUser {
     }
 
     /**
-     * Сохранить информацию о пользователе в БД
+     * Сохраняет информацию о пользователе в БД
      * @param create Требуется ли создать новую запись в таблице
      */
 
@@ -243,7 +246,7 @@ public class FBUser {
         String access = gson.toJson(userAccess);
         if (create) {
             String sql = "INSERT INTO Players (`ID`, `Nickname`, `Name`, `IP`, `DiscordID`, `Access`, `Data`) VALUES ('" + id + "', '" + nickname + "', '" + name + "', '" +  ip + "', '" +  discordId + "', '" + access + "', '" + data + "')";
-            ApiPlugin.getDatabase().update(sql);
+            FunBazeApiPlugin.getDatabase().update(sql);
         } else {
             SavingQueue.send(nickname);
         }

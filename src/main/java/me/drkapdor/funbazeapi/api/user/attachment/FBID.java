@@ -1,6 +1,6 @@
 package me.drkapdor.funbazeapi.api.user.attachment;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class FBID {
 
     public boolean isUnique() {
         try {
-            return !ApiPlugin.getDatabase().query("SELECT * FROM Players WHERE ID = '" + id + "'").next();
+            return !FunBazeApiPlugin.getDatabase().query("SELECT * FROM Players WHERE ID = '" + id + "'").next();
         } catch (SQLException exception) {
             return false;
         }

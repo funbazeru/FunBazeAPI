@@ -2,8 +2,7 @@ package me.drkapdor.funbazeapi.api.user.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.event.user.UserSavedEvent;
 import me.drkapdor.funbazeapi.api.user.FBUser;
 import me.drkapdor.funbazeapi.api.user.manager.UserNotLoadedException;
@@ -24,20 +23,20 @@ public class SavingQueue {
 
     static {
         //Таск-таймер (T = 25 / 20 секунд), проверяющий наличие учётных записей в очереди и сохраняющий их в базу данных
-        Bukkit.getScheduler().runTaskTimer(ApiPlugin.getInstance(), () -> queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskTimer(FunBazeApiPlugin.getInstance(), () -> queue.forEach(nickname -> Bukkit.getScheduler().runTaskAsynchronously(FunBazeApiPlugin.getInstance(), () -> {
             try {
                 if (queue.contains(nickname.toLowerCase())) {
-                    FBUser user = ApiPlugin.getApi().getUserManager().getUser(nickname);
+                    FBUser user = FunBazeApiPlugin.getApi().getUserManager().getUser(nickname);
                     if (user != null) {
                         String name = gson.toJson(user.getUserName());
                         String data = gson.toJson(user.getData());
                         String access = gson.toJson(user.getAccess());
                         String sql = "UPDATE Players SET ID = '" + user.getId() + "', Name = '" + name + "', IP = '" + user.getIp() + "', DiscordID = '" + user.getDiscordId() + "', Access = '" + access + "', Data = '" + data + "' WHERE Nickname = '" + user.getNickname() + "'";
-                        ApiPlugin.getDatabase().update(sql);
+                        FunBazeApiPlugin.getDatabase().update(sql);
                         Bukkit.getPluginManager().callEvent(new UserSavedEvent(user));
                     }
                     queue.remove(nickname.toLowerCase());
-                    ApiPlugin.getApi().getUserManager().unCache(nickname);
+                    FunBazeApiPlugin.getApi().getUserManager().unCache(nickname);
                 }
             } catch(UserNotLoadedException ignored){
             }

@@ -1,6 +1,6 @@
 package me.drkapdor.funbazeapi.utility;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -16,7 +16,7 @@ public class TransitionUtils {
             for (Entity entity : player.getPassengers())
                 player.removePassenger(entity);
             player.teleport(location);
-            Bukkit.getScheduler().runTaskLater(ApiPlugin.getInstance(), () -> entities.forEach(player::addPassenger), 5);
+            Bukkit.getScheduler().runTaskLater(FunBazeApiPlugin.getInstance(), () -> entities.forEach(player::addPassenger), 5);
         } else player.teleport(location);
     }
 }

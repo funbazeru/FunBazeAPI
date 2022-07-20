@@ -1,7 +1,6 @@
 package me.drkapdor.funbazeapi.api.role;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
-import me.drkapdor.funbazeapi.api.FunBazeApi;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.event.roleplay.PlayerRoleChangeEvent;
 import me.drkapdor.funbazeapi.api.user.FBUser;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserMeta;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -92,7 +90,7 @@ public class RolesManager {
         Bukkit.getPluginManager().callEvent(new PlayerRoleChangeEvent(player, roles.get(role), getPlayerRole(player), start, particles, skinChangeNeeded));
         playersRoles.put(player, roles.get(role));
         roles.get(role).giveJobItems(player);
-        Bukkit.getScheduler().runTaskLater(ApiPlugin.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(FunBazeApiPlugin.getInstance(), () ->
                 roles.get(role).applyJobEffects(player), 5L);
         return true;
     }
@@ -137,9 +135,9 @@ public class RolesManager {
     public void dropRole(Player player) {
         FBUser user;
         try {
-            user = ApiPlugin.getApi().getUserManager().getUser(player);
+            user = FunBazeApiPlugin.getApi().getUserManager().getUser(player);
         } catch (UserNotLoadedException ex) {
-            user = ApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.OFFLINE_REQUEST);
+            user = FunBazeApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.OFFLINE_REQUEST);
         }
         Role role = getPlayerRole(player);
         if (role != null) {

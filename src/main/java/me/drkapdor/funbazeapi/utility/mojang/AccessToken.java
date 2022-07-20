@@ -1,6 +1,6 @@
 package me.drkapdor.funbazeapi.utility.mojang;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 
 import java.util.Base64;
 
@@ -34,7 +34,7 @@ public class AccessToken {
      */
 
     public boolean isValid() {
-        return  ApiPlugin.getJsonParser().parse(new String(Base64.getDecoder().decode(token.split("\\.")[1]))).getAsJsonObject().get("exp").getAsLong() > System.currentTimeMillis();
+        return  FunBazeApiPlugin.getJsonParser().parse(new String(Base64.getDecoder().decode(token.split("\\.")[1]))).getAsJsonObject().get("exp").getAsLong() > System.currentTimeMillis();
     }
 
     public void refresh() {

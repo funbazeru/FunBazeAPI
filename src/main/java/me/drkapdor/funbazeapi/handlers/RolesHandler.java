@@ -1,7 +1,7 @@
 package me.drkapdor.funbazeapi.handlers;
 
 import de.tr7zw.nbtapi.NBTItem;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.event.roleplay.PlayerRoleChangeEvent;
 import me.drkapdor.funbazeapi.api.role.Role;
 import me.drkapdor.funbazeapi.api.role.RolesManager;
@@ -34,7 +34,7 @@ public class RolesHandler implements Listener {
         Player player = event.getPlayer();
         manager.dropRole(player);
         clearPlayer(player, false);
-        ApiPlugin.getApi().getRolesManager().pendingTeam.addEntry(player.getName());
+        FunBazeApiPlugin.getApi().getRolesManager().pendingTeam.addEntry(player.getName());
     }
 
     @EventHandler (priority = EventPriority.LOW)
@@ -44,9 +44,9 @@ public class RolesHandler implements Listener {
         clearPlayer(player, true);
         FBUser user;
         try {
-            user = ApiPlugin.getApi().getUserManager().getUser(player);
+            user = FunBazeApiPlugin.getApi().getUserManager().getUser(player);
         } catch (UserNotLoadedException exception) {
-            user = ApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
+            user = FunBazeApiPlugin.getApi().getUserManager().load(player.getName(), CacheMethod.GAME_SESSION);
         }
         if (user != null) {
             //Сохраняем отыгранное на роли время
@@ -64,7 +64,7 @@ public class RolesHandler implements Listener {
             if (event.isChangeSkinNeeded()) {
                 //Обновляем скин в соответствии с ролью
                 Role current = event.getRole();
-                SkinsManager skinsManager = ApiPlugin.getApi().getSkinsManager();
+                SkinsManager skinsManager = FunBazeApiPlugin.getApi().getSkinsManager();
 //                BufferedImage customSkin = user.getCustomSkin(current.getSkinName(user.getData().getMeta().getGender()));
 //                if (customSkin != null) {
 //                    Bukkit.getScheduler().runTaskAsynchronously(ApiPlugin.getInstance(), () -> {
