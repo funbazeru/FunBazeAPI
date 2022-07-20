@@ -3,6 +3,11 @@ package me.drkapdor.funbazeapi.utility;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 
+/**
+ * Обёртка для упрощённого взаимодействия с Chat Component API
+ * @author DrKapdor
+ */
+
 public class AdvancedMessage {
 
     private TextComponent component;
@@ -59,6 +64,10 @@ public class AdvancedMessage {
 
     public TextComponent getComponent() {
         return component;
+    }
+
+    public boolean isBuilder() {
+        return builder != null;
     }
 
     public BaseComponent[] build() {

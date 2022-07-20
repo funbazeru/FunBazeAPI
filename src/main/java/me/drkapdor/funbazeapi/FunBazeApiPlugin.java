@@ -10,7 +10,9 @@ import me.drkapdor.funbazeapi.database.SQLiteDatabase;
 import me.drkapdor.funbazeapi.handlers.ConnectionHandler;
 import me.drkapdor.funbazeapi.handlers.RolesHandler;
 import me.drkapdor.funbazeapi.rest.FunBazeRestApi;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -93,6 +95,7 @@ public class FunBazeApiPlugin extends JavaPlugin {
         instance = this;
         loadConfiguration();
         api = new FunBazeApi();
+        Bukkit.getServicesManager().register(FunBazeApi.class, api, this, ServicePriority.Normal);
         init();
         api.getAddonsManager().load();
         if (configuration.getBoolean("REST.START")) {

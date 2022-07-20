@@ -1,5 +1,5 @@
 name: FunBazeAPI
-version: 1.0-SNAPSHOT
+version: 1.0.2-RELEASE
 author: DrKapdor
 description: "Программный интерфейс взаимодействия с системами FunBaze"
 website: "https://dev.funbaze.ru/"
@@ -9,7 +9,7 @@ depend:
   - NBTAPI
   - PluginMessagingAPI
 
-main: me.drkapdor.funbazeapi.ApiPlugin
+main: me.drkapdor.funbazeapi.FunBazeApiPlugin
 
 commands:
   addons:
