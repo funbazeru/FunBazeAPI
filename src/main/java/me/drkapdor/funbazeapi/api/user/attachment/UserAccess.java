@@ -1,4 +1,4 @@
-package me.drkapdor.funbazeapi.api.user.attachment.roleplay;
+package me.drkapdor.funbazeapi.api.user.attachment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,15 @@ import java.util.List;
 public class UserAccess {
 
     private String password;
-    private long lastPasswordChangeDate = -1;
+    private long lastPasswordChangeDate;
+    private AccessMode mode;
     private String recoveryEmail;
 
     private final List<String> usedPasswords;
     private final List<String> allowedIp;
 
     public UserAccess() {
+        mode = AccessMode.CLASSIC;
         usedPasswords = new ArrayList<>();
         allowedIp = new ArrayList<>();
     }
@@ -42,6 +44,24 @@ public class UserAccess {
         usedPasswords.add(password);
         this.password = password;
         lastPasswordChangeDate = System.currentTimeMillis();
+    }
+
+    /**
+     * Возвращает режим авторизации пользователя
+     * @return Режим авторизации
+     */
+
+    public AccessMode getMode() {
+        return mode;
+    }
+
+    /**
+     * Устанавливает режим авторизации пользователя
+     * @param mode Режим авторизации
+     */
+
+    public void setMode(AccessMode mode) {
+        this.mode = mode;
     }
 
     /**
@@ -106,5 +126,19 @@ public class UserAccess {
 
     public long getLastPasswordChangeDate() {
         return lastPasswordChangeDate;
+    }
+
+    public enum AccessMode {
+
+        /**
+         * Классическая система авторизации (/register && /login)
+         */
+        CLASSIC,
+
+        /**
+         * Система авторизации через сервисы ВКонтакте
+         */
+        VKONTAKTE
+
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>org.funbaze</groupId>
     <artifactId>funbazeapi</artifactId>
-    <version>1.0.2_3-RELEASE</version>
+    <version>1.0.2-R0.3-RELEASE</version>
     <packaging>jar</packaging>
 
     <properties>

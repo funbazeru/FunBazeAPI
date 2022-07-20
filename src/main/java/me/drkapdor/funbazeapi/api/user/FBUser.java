@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.user.attachment.FBID;
 import me.drkapdor.funbazeapi.api.user.attachment.UserData;
-import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserAccess;
+import me.drkapdor.funbazeapi.api.user.attachment.UserAccess;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserName;
 import me.drkapdor.funbazeapi.api.user.storage.SavingQueue;
 import org.bukkit.Bukkit;
