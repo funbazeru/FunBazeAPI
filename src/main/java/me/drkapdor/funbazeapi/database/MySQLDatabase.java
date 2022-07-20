@@ -1,6 +1,6 @@
 package me.drkapdor.funbazeapi.database;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -42,7 +42,7 @@ public class MySQLDatabase implements Database {
     public void connect() {
         try {
             connection = getConnection();
-            ApiPlugin.getInstance().getLogger().log(Level.INFO, "§aПодключение к базе данных успешно установлено!");
+            FunBazeApiPlugin.getInstance().getLogger().log(Level.INFO, "§aПодключение к базе данных успешно установлено!");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }

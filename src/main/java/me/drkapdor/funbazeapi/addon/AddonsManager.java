@@ -1,15 +1,12 @@
 package me.drkapdor.funbazeapi.addon;
 
-import com.comphenix.protocol.wrappers.Pair;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.addon.exception.SameAddonException;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -38,7 +35,7 @@ public class AddonsManager {
      */
 
     public boolean load() {
-        for (File file : Objects.requireNonNull(ApiPlugin.addonsFolder.listFiles())) {
+        for (File file : Objects.requireNonNull(FunBazeApiPlugin.addonsFolder.listFiles())) {
             try {
                 JarFile jarFile = new JarFile(file.getPath());
                 Enumeration<JarEntry> enumeration = jarFile.entries();
@@ -46,7 +43,7 @@ public class AddonsManager {
                     JarEntry entry = enumeration.nextElement();
                     if (entry.getName().endsWith(".class")) {
                         URL[] urls = { new URL("jar:file:" + file.getPath() +"!/") };
-                        URLClassLoader urlClassLoader = new URLClassLoader(urls, ApiPlugin.class.getClassLoader());
+                        URLClassLoader urlClassLoader = new URLClassLoader(urls, FunBazeApiPlugin.class.getClassLoader());
                         Class<?> loadedClass = urlClassLoader.loadClass(entry.getName()
                                 .replace(".class", "").replace("/", "."));
                         Object object = loadedClass.newInstance();
@@ -109,7 +106,7 @@ public class AddonsManager {
      */
 
     public void registerListener(FBAddon addon, Listener listener) {
-        Bukkit.getPluginManager().registerEvents(listener, ApiPlugin.getInstance());
+        Bukkit.getPluginManager().registerEvents(listener, FunBazeApiPlugin.getInstance());
         if (!listenerMap.containsKey(addon.getName()))
             listenerMap.put(addon.getName(), new ArrayList<>());
         listenerMap.get(addon.getName()).add(listener);

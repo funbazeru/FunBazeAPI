@@ -1,7 +1,7 @@
 package me.drkapdor.funbazeapi.api;
 
 
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.addon.AddonsManager;
 import me.drkapdor.funbazeapi.api.npc.NPCManager;
 import me.drkapdor.funbazeapi.api.promocode.PromoCodeManager;
@@ -32,7 +32,7 @@ public class FunBazeApi {
         npcManager = new NPCManager();
         promoCodeManager = new PromoCodeManager();
         addonsManager = new AddonsManager();
-        Bukkit.getServer().getServicesManager().register(FunBazeApi.class, this, ApiPlugin.getInstance(), ServicePriority.Lowest);
+        Bukkit.getServer().getServicesManager().register(FunBazeApi.class, this, FunBazeApiPlugin.getInstance(), ServicePriority.Lowest);
     }
 
     /**

@@ -3,7 +3,7 @@ package me.drkapdor.funbazeapi.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.user.records.UserSkin;
 import me.drkapdor.funbazeapi.utility.mojang.MojangUtils;
 
@@ -34,8 +34,8 @@ public class SkinUtils {
     public static BufferedImage getSkinImage(String account) {
         try {
             InputStreamReader reader = new InputStreamReader(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + account + "?unsigned=false").openStream());
-            JsonObject response = ApiPlugin.getJsonParser().parse(reader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
-            JsonObject decoded = ApiPlugin.getJsonParser().parse(new String(Base64.getDecoder().decode(response.get("value").getAsString()))).getAsJsonObject();
+            JsonObject response = FunBazeApiPlugin.getJsonParser().parse(reader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
+            JsonObject decoded = FunBazeApiPlugin.getJsonParser().parse(new String(Base64.getDecoder().decode(response.get("value").getAsString()))).getAsJsonObject();
             String skinUrl = decoded.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url").getAsString();
             return ImageIO.read(new URL(skinUrl));
         } catch (Exception exception) {
@@ -161,7 +161,7 @@ public class SkinUtils {
         String signature = "";
         try {
             InputStreamReader reader = new InputStreamReader(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + MojangUtils.currentAccount().getUUID() + "?unsigned=false").openStream());
-            JsonObject response = ApiPlugin.getJsonParser().parse(reader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
+            JsonObject response = FunBazeApiPlugin.getJsonParser().parse(reader).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
             value = response.get("value").getAsString();
             signature = response.get("signature").getAsString();
         } catch (Exception ignored) {

@@ -22,9 +22,9 @@ import java.util.logging.Level;
  * @author DrKapdor
  */
 
-public class ApiPlugin extends JavaPlugin {
+public class FunBazeApiPlugin extends JavaPlugin {
 
-    private static ApiPlugin instance;
+    private static FunBazeApiPlugin instance;
     private static FunBazeApi api;
     private static FunBazeRestApi restApi;
     private static final JsonParser jsonParser = new JsonParser();
@@ -39,7 +39,7 @@ public class ApiPlugin extends JavaPlugin {
      * @return Экземпляр плагина
      */
 
-    public static ApiPlugin getInstance() {
+    public static FunBazeApiPlugin getInstance() {
         return instance;
     }
 

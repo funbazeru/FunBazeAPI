@@ -1,7 +1,7 @@
 package me.drkapdor.funbazeapi.utility.mojang;
 
 import com.google.gson.JsonObject;
-import me.drkapdor.funbazeapi.ApiPlugin;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.http.CustomHttpRequest;
 import me.drkapdor.funbazeapi.http.CustomHttpResponse;
 import me.drkapdor.funbazeapi.http.RequestProperty;
@@ -56,7 +56,7 @@ public class MojangUtils {
             CustomHttpResponse response = request.finish();
             System.out.println("nextToken " + response.getCode());
             if (response.getCode() == HttpURLConnection.HTTP_OK) {
-                JsonObject jsonResponse = ApiPlugin.getJsonParser().parse(response.getContent()).getAsJsonObject();
+                JsonObject jsonResponse = FunBazeApiPlugin.getJsonParser().parse(response.getContent()).getAsJsonObject();
                 uuid = jsonResponse.get("clientToken").getAsString();
                 accessToken = jsonResponse.get("accessToken").getAsString();
             }

@@ -1,14 +1,13 @@
 package me.drkapdor.funbazeapi.addon;
 
-import me.drkapdor.funbazeapi.ApiPlugin;
-import org.bukkit.Bukkit;
+import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class AddonsCommand implements CommandExecutor {
 
-    private static final AddonsManager addonManager = ApiPlugin.getApi().getAddonsManager();
+    private static final AddonsManager addonManager = FunBazeApiPlugin.getApi().getAddonsManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
