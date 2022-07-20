@@ -7,7 +7,7 @@
 <dependency>
   <groupId>org.funbaze</groupId>
   <artifactId>funbazeapi</artifactId>
-  <version>1.0.2-RELEASE</version>
+  <version>LATEST</version>
 </dependency>
 ```
 #### II. Добавляем зависимость в `plugin.yml`
