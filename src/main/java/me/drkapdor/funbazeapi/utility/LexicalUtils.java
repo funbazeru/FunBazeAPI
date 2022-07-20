@@ -79,7 +79,4 @@ public class LexicalUtils {
         return builder.substring(1);
     }
 
-    public static void main(String[] args) {
-        System.out.println(capitalize("начальник отдела"));
-    }
 }
