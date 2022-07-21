@@ -3,16 +3,23 @@ package me.drkapdor.funbazeapi.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import me.drkapdor.funbazeapi.FunBazeApiPlugin;
 import me.drkapdor.funbazeapi.api.user.records.UserSkin;
 import me.drkapdor.funbazeapi.utility.mojang.MojangUtils;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Base64;
+import java.util.UUID;
 
 /**
  * Утилита для работы с кастомными скинами
@@ -25,8 +32,7 @@ public class SkinUtils {
     private static final JsonParser JSON_PARSER = new JsonParser();
 
     /**
-     * Получить изображение развёртки скина премиум-аккаунта
-     *
+     * Возвращает изображение развёртки скина премиум-аккаунта
      * @param account UUID
      * @return Изображение развёртки скина (64x64 или 64x32)
      */
@@ -44,7 +50,7 @@ public class SkinUtils {
     }
 
     /**
-     * Получить изображение лица скина
+     * Вощвращает изображение лица скина
      *
      * @param value Закодированное в формате Base64 значение скина
      * @return Изображение лица скина (8x8)
@@ -74,8 +80,7 @@ public class SkinUtils {
     }
 
     /**
-     * Получить изображение лица скина
-     *
+     * Возвращает изображение лица скина
      * @param image Изображение развёртки скина
      * @return Изображение лица скина (8x8)
      */
@@ -90,8 +95,7 @@ public class SkinUtils {
     }
 
     /**
-     * Получить изображение лица скина
-     *
+     * Возвращает изображение лица скина
      * @param image Изображение развёртки скина
      * @return Изображение лица скина (8x8)
      */
@@ -101,13 +105,13 @@ public class SkinUtils {
     }
 
     /**
-     * Наложить изображение одного скина на другой
-     *
+     * Накладывает изображение одного скина на другой
      * @param main Скин, на который осуществляется наложение
      * @param additional Скин, накладываемый на основной
      * @return Изображение комбинации основного и накладываемого скина (64x64 или 64x32)
      */
 
+    @Deprecated
     public static BufferedImage combineSkins(BufferedImage main, BufferedImage additional) {
         BufferedImage canvas = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB);
         Graphics canvasGraphics = canvas.getGraphics();
@@ -135,8 +139,7 @@ public class SkinUtils {
     }
 
     /**
-     * Получить URL изображения скина из закодированного Base64 значения
-     *
+     * Возвращает URL изображения скина из закодированного Base64 значения
      * @param base64String Закодированное значение
      * @return URL изображения развёртки скина (64x64 или 64x32)
      */
@@ -151,8 +154,7 @@ public class SkinUtils {
     }
 
     /**
-     * Получить изображение развёртки скина зарезервированного аккаунта FunBaze
-     *
+     * Возвращает изображение развёртки скина зарезервированного аккаунта FunBaze
      * @return Изображения развёртки скина (64x64 или 64x32)
      */
 
@@ -167,5 +169,27 @@ public class SkinUtils {
         } catch (Exception ignored) {
         }
         return new UserSkin(value, signature);
+    }
+
+    /**
+     * Создаёт голову с пользовательским скином
+     * @param value Значение скина в формате Base64
+     * @return Голова с пользовательским скином
+     */
+
+    public static ItemStack createSkull(String value) {
+        ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+        try {
+            Field profileField = skullMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "");
+            gameProfile.getProperties().put("textures", new Property("textures", value));
+            profileField.set(skullMeta, gameProfile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
+            exception.printStackTrace();
+        }
+        itemStack.setItemMeta(skullMeta);
+        return itemStack;
     }
 }

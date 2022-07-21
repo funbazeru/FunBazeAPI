@@ -1,5 +1,6 @@
 package me.drkapdor.funbazeapi.api.event.auth;
 
+import me.drkapdor.funbazeapi.api.user.attachment.access.AccessMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
@@ -17,7 +18,7 @@ public class PlayerAuthenticateEvent extends PlayerEvent {
         return HANDLER_LIST;
     }
 
-    private final AuthenticationType type;
+    private final AccessMode mode;
     private final boolean success;
     private final boolean bySession;
 
@@ -30,14 +31,14 @@ public class PlayerAuthenticateEvent extends PlayerEvent {
      * Конструктор события
      *
      * @param player Игрок
-     * @param type Тип авторизации
+     * @param mode Режим авторизации
      * @param success Успешна ли авторизация
      * @param bySession Совершена ли авторизация автоматически
      */
 
-    public PlayerAuthenticateEvent(Player player, AuthenticationType type, boolean success, boolean bySession) {
+    public PlayerAuthenticateEvent(Player player, AccessMode mode, boolean success, boolean bySession) {
         super(player);
-        this.type = type;
+        this.mode = mode;
         this.success = success;
         this.bySession = bySession;
     }
@@ -53,16 +54,16 @@ public class PlayerAuthenticateEvent extends PlayerEvent {
     }
 
     /**
-     * Возвращает тип авторизации
+     * Возвращает режим авторизации
      *
      * VKONTAKTE - Вход через сервис ВКонтакте
-     * DEFAULT - Вход с использованием пароля
+     * CLASSIC - Вход с использованием пароля
      *
      * @return Тип авторизации
      */
 
-    public AuthenticationType getType() {
-        return type;
+    public AccessMode getMode() {
+        return mode;
     }
 
     /**

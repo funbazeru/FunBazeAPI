@@ -1,4 +1,4 @@
-package me.drkapdor.funbazeapi.api.user.attachment;
+package me.drkapdor.funbazeapi.api.user.attachment.access;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ public class UserAccess {
     private String password;
     private long lastPasswordChangeDate;
     private AccessMode mode;
+    private AccessSession session;
     private String recoveryEmail;
 
     private final List<String> usedPasswords;
@@ -62,6 +63,24 @@ public class UserAccess {
 
     public void setMode(AccessMode mode) {
         this.mode = mode;
+    }
+
+    /**
+     * Возвращает текущую сессию авторизации
+     * @return Сессия авторизации
+     */
+
+    public AccessSession getSession() {
+        return session;
+    }
+
+    /**
+     * Устанавливает сессию авторизации
+     * @param session Сессия авторизации
+     */
+
+    public void setSession(AccessSession session) {
+        this.session = session;
     }
 
     /**
@@ -128,17 +147,4 @@ public class UserAccess {
         return lastPasswordChangeDate;
     }
 
-    public enum AccessMode {
-
-        /**
-         * Классическая система авторизации (/register && /login)
-         */
-        CLASSIC,
-
-        /**
-         * Система авторизации через сервисы ВКонтакте
-         */
-        VKONTAKTE
-
-    }
 }

@@ -8,7 +8,7 @@ import me.drkapdor.funbazeapi.api.event.user.UserPostProcessEvent;
 import me.drkapdor.funbazeapi.api.user.FBUser;
 import me.drkapdor.funbazeapi.api.user.attachment.FBID;
 import me.drkapdor.funbazeapi.api.user.attachment.UserData;
-import me.drkapdor.funbazeapi.api.user.attachment.UserAccess;
+import me.drkapdor.funbazeapi.api.user.attachment.access.UserAccess;
 import me.drkapdor.funbazeapi.api.user.attachment.roleplay.UserName;
 import me.drkapdor.funbazeapi.api.user.storage.SavingQueue;
 import org.bukkit.Bukkit;

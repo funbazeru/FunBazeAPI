@@ -1,5 +1,6 @@
 package me.drkapdor.funbazeapi.api.event.auth;
 
+import me.drkapdor.funbazeapi.api.user.attachment.access.AccessMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
@@ -16,6 +17,8 @@ public class PlayerRegisterEvent extends PlayerEvent {
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
+
+    private AccessMode mode;
 
     /*
     Переменная принимает значение в случае
@@ -34,10 +37,12 @@ public class PlayerRegisterEvent extends PlayerEvent {
     /**
      * Конструктор события
      * @param player Пользователь
+     * @param mode Режим авторизации
      */
 
-    public PlayerRegisterEvent(Player player) {
+    public PlayerRegisterEvent(Player player, AccessMode mode) {
         super(player);
+        this.mode = mode;
     }
 
     @Override
@@ -48,6 +53,15 @@ public class PlayerRegisterEvent extends PlayerEvent {
     @Override
     public HandlerList getHandlers() {
         return HANDLER_LIST;
+    }
+
+    /**
+     * Возвращает режим регистрации
+     * @return Режим регистрации
+     */
+
+    public AccessMode getMode() {
+        return mode;
     }
 
     /**
